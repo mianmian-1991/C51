@@ -1,0 +1,173 @@
+C51 COMPILER V6.12  12864_GDRAM                                                            05/29/2017 23:12:51 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE 12864_GDRAM
+OBJECT MODULE PLACED IN .\12864_GDRAM.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\12864_GDRAM.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #include<intrins.h>
+   3          #include<image.h>
+   4          
+   5          #define uchar unsigned char
+   6          #define uint unsigned int
+   7          
+   8          #define LCD_data P0
+   9          
+  10          #define COMMAND 1
+  11          #define DATA 0
+  12          
+  13          sbit LCD_E = P3^4;
+  14          sbit LCD_RS = P3^5;
+  15          sbit LCD_RW = P3^6;
+  16          sbit LCD_PSB = P3^7;
+  17          sbit Weixuan = P2^6;
+  18          sbit Duanxuan = P2^7;
+  19          
+  20          void delay(uint);
+  21          void init();
+  22          void write(uchar, bit);
+  23          void draw_GDRAM(uchar *);
+  24          void clear_GDRAM();
+  25          
+  26          uchar a;
+  27          
+  28          void main()
+  29          {	
+  30   1      	init();	
+  31   1      	/*
+  32   1      	write(0x34, COMMAND); 
+  33   1      	write(0x36, COMMAND); 
+  34   1      	delay(2000);
+  35   1      	write(0x01, COMMAND); 
+  36   1      */
+  37   1      	clear_GDRAM();
+  38   1      	
+  39   1      	draw_GDRAM(begger);
+  40   1      	
+  41   1      	while(1);
+  42   1      }
+  43          
+  44          void init()
+  45          {
+  46   1      	Weixuan = 0;
+  47   1      	Duanxuan = 0;
+  48   1      	LCD_PSB = 1;
+  49   1      	write(0x30, COMMAND);
+  50   1      	delay(5);	
+  51   1      	write(0x08, COMMAND);
+  52   1      	delay(5);	
+  53   1      	write(0x01, COMMAND);
+  54   1      	delay(5);	
+  55   1      }
+C51 COMPILER V6.12  12864_GDRAM                                                            05/29/2017 23:12:51 PAGE 2   
+
+  56          
+  57          void write(uchar com_data, bit flag)
+  58          {
+  59   1      	if(flag==COMMAND)
+  60   1      		LCD_RS = 0;
+  61   1      	else
+  62   1      		LCD_RS = 1;
+  63   1      	LCD_RW = 0;
+  64   1      	LCD_E = 0;
+  65   1      	P0 = com_data;
+  66   1      	delay(1);
+  67   1      	LCD_E = 1;
+  68   1      	delay(1);
+  69   1      	LCD_E = 0;
+  70   1      }
+  71          
+  72          void draw_GDRAM(uchar *image)
+  73          {
+  74   1           uint y, yi, xi;
+  75   1           write(0x34, COMMAND);     // 扩展指令集，暂时关闭 GDRAM 显示
+  76   1      	 write(0x36, COMMAND);
+  77   1      
+  78   1           // 上半屏：y 0-31，x 0x80-0x87（等同于 DDRAM 前两行）
+  79   1           y = 0x80;
+  80   1           for(yi=0;yi<32;yi++)     // yi 是 y 地址增量，32 行，每个循环写一行
+  81   1           {
+  82   2                write(y+yi, COMMAND);     // y 地址，每次加 1
+  83   2                write(0x80, COMMAND);     // 每写一行 x 总是从行首 0x80 开始，x 地址不用手动加 1
+  84   2                for(xi=0;xi<16;xi++)     // xi 是 x 地址增量的两倍，8 列，每列 2 个字节，每个循环写一个字节
+  85   2                {
+  86   3                      a = *image;
+  87   3      				write(*image++, DATA);
+  88   3                }
+  89   2           }
+  90   1           
+  91   1           // 下半屏：y 0-31，x 0x88-0x8F（等同于 DDRAM 前两行）
+  92   1           y = 0x80;
+  93   1           for(yi=0;yi<32;yi++)     // yi 是 y 地址增量，32 行，每个循环写一行
+  94   1           {
+  95   2                write(y+yi, COMMAND);     // y 地址，每次加 1
+  96   2                write(0x88, COMMAND);     // 每写一行 x 总是从行首 0x88 开始，x 地址不用手动加 1
+  97   2                for(xi=0;xi<16;xi++)     // xi 是 x 地址增量的两倍，8 列，每列 2 个字节，每个循环写一个字节
+  98   2                {
+  99   3                     write(*image++, DATA);
+ 100   3                }
+ 101   2           }
+ 102   1      
+ 103   1           write(0x36, COMMAND);     // 打开 GDRAM 显示
+ 104   1           write(0x30, COMMAND);     // 回基本指令集
+ 105   1      }
+ 106          
+ 107          void clear_GDRAM()
+ 108          {
+ 109   1      	 uint y, yi, xi;
+ 110   1           write(0x34, COMMAND);     // 扩展指令集，暂时关闭 GDRAM 显示
+ 111   1      	 write(0x36, COMMAND);
+ 112   1      
+ 113   1           // 上半屏：y 0-31，x 0x80-0x87（等同于 DDRAM 前两行）
+ 114   1           y = 0x80;
+ 115   1           for(yi=0;yi<32;yi++)     // yi 是 y 地址增量，32 行，每个循环写一行
+ 116   1           {
+ 117   2                write(y+yi, COMMAND);     // y 地址，每次加 1
+C51 COMPILER V6.12  12864_GDRAM                                                            05/29/2017 23:12:51 PAGE 3   
+
+ 118   2                write(0x80, COMMAND);     // 每写一行 x 总是从行首 0x80 开始，x 地址不用手动加 1
+ 119   2                for(xi=0;xi<16;xi++)     // xi 是 x 地址增量的两倍，8 列，每列 2 个字节，每个循环写一个字节
+ 120   2                {
+ 121   3                     write(0x00, DATA);
+ 122   3                }
+ 123   2           }
+ 124   1           
+ 125   1           // 下半屏：y 0-31，x 0x88-0x8F（等同于 DDRAM 前两行）
+ 126   1           y = 0x80;
+ 127   1           for(yi=0;yi<32;yi++)     // yi 是 y 地址增量，32 行，每个循环写一行
+ 128   1           {
+ 129   2                write(y+yi, COMMAND);     // y 地址，每次加 1
+ 130   2                write(0x88, COMMAND);     // 每写一行 x 总是从行首 0x88 开始，x 地址不用手动加 1
+ 131   2                for(xi=0;xi<16;xi++)     // xi 是 x 地址增量的两倍，8 列，每列 2 个字节，每个循环写一个字节
+ 132   2                {
+ 133   3                     write(0x00, DATA);
+ 134   3                }
+ 135   2           }
+ 136   1      
+ 137   1           write(0x36, COMMAND);     // 打开 GDRAM 显示
+ 138   1           write(0x30, COMMAND);     // 回基本指令集
+ 139   1      }
+ 140          
+ 141          void delay(uint x)
+ 142          {
+ 143   1      	uint i,j;
+ 144   1      	for(i=0;i<x;i++)
+ 145   1      		for(j=0;j<110;j++);
+ 146   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    512    ----
+   CONSTANT SIZE    =   1024    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1      15
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

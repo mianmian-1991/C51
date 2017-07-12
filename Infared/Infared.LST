@@ -1,0 +1,177 @@
+C51 COMPILER V6.12  INFARED                                                                06/10/2017 11:56:15 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE INFARED
+OBJECT MODULE PLACED IN .\Infared.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\Infared.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          
+   3          #define uchar unsigned char 
+   4          
+   5          #define Imax  14000               // 此处为晶振为11.0592时的取值, 
+   6          #define Imin  8000                // 如用其它频率的晶振时,
+   7          #define Inum1 1450                // 要改变相应的取值。
+   8          #define Inum2 700 
+   9          #define Inum3 3000 
+  10          
+  11          sbit Duanxuan = P2^6;        
+  12          sbit Weixuan = P2^7;
+  13          
+  14          // 段选 U1
+  15          uchar code DigitronTable[] =
+  16          {
+  17              0x3f, 0x06, 0x5b, 0x4f,
+  18              0x66, 0x6d, 0x7d, 0x07,
+  19              0x7f, 0x6f, 0x77, 0x7c,
+  20              0x39, 0x5e, 0x79, 0x71
+  21          };
+  22          
+  23          // 位选 U2
+  24          uchar code WeiTable[] =
+  25          {
+  26              0xfe, 0xfd, 0xfb, 0xf7, 0xef, 0xdf
+  27          };
+  28          
+  29          uchar Im[4] = {0x00,0x00,0x00,0x00};	// 遥控器取码保存于 Im[2]
+  30          
+  31          uchar f;	// 遥控器启始码标志
+  32          uchar IrOK;		// 遥控器取码成功标志
+  33          unsigned long m,Tc;		// m 取码时定位数用，Tc 是 INT1 中断时 T0 时长，是确定码值的信号
+  34          uchar key;
+  35          
+  36          void init();
+  37          void delay(uchar);
+  38          void display(uchar);
+  39          void Inf_Dispose();
+  40          
+  41          void main(void)
+  42          { 
+  43   1      	init();
+  44   1      
+  45   1      	while(1)
+  46   1      	{
+  47   2      	    Inf_Dispose();            //红外接收处理
+  48   2              display(key);                //数码管显示
+  49   2          }
+  50   1      }
+  51          
+  52          void init()
+  53          {
+  54   1      	EA = 1;
+  55   1      	
+C51 COMPILER V6.12  INFARED                                                                06/10/2017 11:56:15 PAGE 2   
+
+  56   1      	IT1 = 1;	// INT1 下降沿中断
+  57   1          EX1 = 1;
+  58   1      
+  59   1      	TMOD = 0x01;                    // T0 方式 1，不需要中断   
+  60   1      	TH0  = 0x00;
+  61   1      	TL0  = 0x00;
+  62   1          TR0  = 1;
+  63   1          ET0 = 0;
+  64   1      }
+  65          
+  66          void delay(uchar i)
+  67          {
+  68   1          uchar j,k; 
+  69   1      
+  70   1          for(j = i;j > 0;j--)
+  71   1          {
+  72   2              for(k = 110;k > 0;k--);
+  73   2          }  
+  74   1      }
+  75          
+  76          void display(uchar num)
+  77          {
+  78   1          Duanxuan = 1;
+  79   1          P0 = DigitronTable[num/16];     // 段码
+  80   1          Duanxuan = 0;
+  81   1          P0 = 0xff;     // 消影
+  82   1          Weixuan = 1;
+  83   1          P0 = WeiTable[0];     // 位码
+  84   1          Weixuan = 0;
+  85   1          delay(3);
+  86   1      	
+  87   1      	Duanxuan = 1;
+  88   1          P0 = DigitronTable[num%16];     // 段码
+  89   1          Duanxuan = 0;
+  90   1          P0 = 0xff;     // 消影
+  91   1          Weixuan = 1;
+  92   1          P0 = WeiTable[1];     // 位码
+  93   1          Weixuan = 0;
+  94   1          delay(3);
+  95   1      }
+  96          
+  97          void intersvr1(void) interrupt 2 using 1	// INT1 中断程序
+  98          {
+  99   1      	Tc = TH0 * 256 + TL0;                      // 提取 INT1 中断时 T0 时长
+ 100   1      	TH0 = 0x00; 
+ 101   1          TL0 = 0x00;                                   // T0 重新计时
+ 102   1      
+ 103   1      	if((Tc > Imin) && (Tc < Imax))				// Tc 在 Imin 和 Imax 之间，说明找到遥控器开始有码传入
+ 104   1          { 
+ 105   2      		m = 0;
+ 106   2              f = 1;		// 启始标志
+ 107   2      		return;
+ 108   2          }
+ 109   1      
+ 110   1          if(f == 1)	
+ 111   1          {
+ 112   2      		// 每次中断右移一位，如果 Tc>Inum1 最高位就加一位 1 进来，共取四个字节到 Im[0]~Im[3] 中
+ 113   2      		// 只有 Im[2] 存的是键码值，Im[3] 是其反码，用来校验
+ 114   2              if(Tc > Inum1 && Tc < Inum3)	// Inum1 < Tc < Inum3 
+ 115   2      	  	{
+ 116   3      			Im[m / 8] = Im[m / 8] >> 1 | 0x80;
+ 117   3                  m++; 
+C51 COMPILER V6.12  INFARED                                                                06/10/2017 11:56:15 PAGE 3   
+
+ 118   3           	}
+ 119   2          	if(Tc > Inum2 && Tc < Inum1) 	// Inum2 < Tc < Inum1
+ 120   2              {
+ 121   3              	Im[m / 8] = Im[m / 8] >> 1; 	
+ 122   3                  m++;                   
+ 123   3      		}
+ 124   2      
+ 125   2      		if(m == 32)		// 四个字节取完了 
+ 126   2      	 	{
+ 127   3                  m = 0;  
+ 128   3                  f = 0;
+ 129   3             	    if(Im[2] ==~ Im[3]) 	// 二者按位反，说明读码正确
+ 130   3      	        {
+ 131   4                      IrOK =1 ;
+ 132   4      		    }
+ 133   3                  else 
+ 134   3                  {
+ 135   4                      IrOK = 0;   // 取码完成后判断读码是否正确
+ 136   4                  }
+ 137   3      	    }
+ 138   2      	}	
+ 139   1      }
+ 140          
+ 141          void Inf_Dispose(void)
+ 142          {
+ 143   1          if(IrOK == 1) 
+ 144   1          { 
+ 145   2              key = Im[2];
+ 146   2              IrOK = 0;	   
+ 147   2      	}
+ 148   1      }
+ 149          
+ 150          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    450    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     15    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

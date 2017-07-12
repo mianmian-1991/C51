@@ -1,0 +1,202 @@
+BL51 BANKED LINKER/LOCATER V4.13                                                        05/30/2017  21:45:29  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.13, INVOKED BY:
+D:\[SOFTWARE]\KEIL\C51\BIN\BL51.EXE DAC.obj TO DAC RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  DAC.obj (DAC)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C?UIDIV)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  DAC (DAC)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0003H     UNIT         ?DT?DAC
+                    000BH     0015H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         ?BI?DAC
+                    0020H.1   0000H.7                *** GAP ***
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     0055H     UNIT         ?C?LIB_CODE
+            CODE    00E4H     004EH     UNIT         ?PR?MAIN?DAC
+            CODE    0132H     0030H     UNIT         ?PR?_DELAY?DAC
+            CODE    0162H     0007H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   DAC (DAC)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?DAC
+  +--> ?C_INITSEG
+
+?PR?MAIN?DAC
+  +--> ?PR?_DELAY?DAC
+
+
+
+SYMBOL TABLE OF MODULE:  DAC (DAC)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/30/2017  21:45:29  PAGE 2
+
+
+  -------         MODULE        DAC
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  B:0020H.0       PUBLIC        up_down
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  B:00B0H.5       PUBLIC        T1
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  D:0008H         PUBLIC        period
+  D:00A8H         PUBLIC        IE
+  B:00B0H.6       PUBLIC        DA_WR
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  B:00A0H.3       PUBLIC        beep
+  B:00B8H.4       PUBLIC        PS
+  B:0090H.1       PUBLIC        T2EX
+  B:00D0H.2       PUBLIC        OV
+  C:00E4H         PUBLIC        main
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  B:00C8H.5       PUBLIC        RCLK
+  B:00C8H.4       PUBLIC        TCLK
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  B:00C8H.0       PUBLIC        CP_RL2
+  D:000AH         PUBLIC        cnt
+  B:00A8H.1       PUBLIC        ET0
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  B:0098H.7       PUBLIC        SM0
+  B:0098H.6       PUBLIC        SM1
+  B:0098H.5       PUBLIC        SM2
+  B:00B8H.1       PUBLIC        PT0
+  B:00B8H.3       PUBLIC        PT1
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/30/2017  21:45:29  PAGE 3
+
+
+  B:00D0H.3       PUBLIC        RS0
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  B:00B8H.2       PUBLIC        PX1
+  B:00C8H.3       PUBLIC        EXEN2
+  B:00A0H.7       PUBLIC        Weixuan
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  B:00B0H.0       PUBLIC        RXD
+  B:00B0H.1       PUBLIC        TXD
+  C:0142H         PUBLIC        _delay
+  B:00D0H.5       PUBLIC        F0
+  D:00D0H         PUBLIC        PSW
+  B:00B0H.2       PUBLIC        DA_CS
+  -------         PROC          MAIN
+  C:00E4H         LINE#         17
+  C:00E4H         LINE#         18
+  C:00E4H         LINE#         19
+  C:00E6H         LINE#         21
+  C:00E8H         LINE#         22
+  C:00EBH         LINE#         23
+  C:00EDH         LINE#         25
+  C:00EDH         LINE#         26
+  C:00EDH         LINE#         27
+  C:00F0H         LINE#         28
+  C:00F0H         LINE#         29
+  C:00F6H         LINE#         30
+  C:00F8H         LINE#         31
+  C:00FFH         LINE#         32
+  C:00FFH         LINE#         33
+  C:0101H         LINE#         34
+  C:0103H         LINE#         35
+  C:010AH         LINE#         36
+  C:010CH         LINE#         37
+  C:010CH         LINE#         38
+  C:010FH         LINE#         39
+  C:0111H         LINE#         41
+  C:0111H         LINE#         42
+  C:0117H         LINE#         43
+  C:0119H         LINE#         44
+  C:0120H         LINE#         45
+  C:0120H         LINE#         46
+  C:0122H         LINE#         47
+  C:0124H         LINE#         48
+  C:012BH         LINE#         49
+  C:012DH         LINE#         50
+  C:012DH         LINE#         51
+  C:0130H         LINE#         52
+  C:0130H         LINE#         53
+  -------         ENDPROC       MAIN
+  -------         PROC          L?0017
+  -------         ENDPROC       L?0017
+  -------         PROC          _DELAY
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/30/2017  21:45:29  PAGE 4
+
+
+  D:0006H         SYMBOL        x
+  -------         DO            x
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         j
+  C:0142H         LINE#         56
+  C:0142H         LINE#         57
+  C:0142H         LINE#         59
+  C:014CH         LINE#         60
+  C:0161H         LINE#         61
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        DAC
+
+  -------         MODULE        ?C?UIDIV
+  C:008FH         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

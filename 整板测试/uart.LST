@@ -1,0 +1,83 @@
+C51 COMPILER V9.00   UART                                                                  05/06/2015 09:33:40 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN uart.OBJ
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE uart.c BROWSE INCDIR(D:\Keil_v5\C51\INC\STC) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <config.h>
+   2          uchar message=100;
+   3          void send_char(uchar date)
+   4          
+   5          {
+   6   1              SBUF=date;             // 发送数据
+   7   1              while(!TI);
+   8   1              TI=0;                                 // 等待数据发送完毕
+   9   1      }
+  10          
+  11          void send_string(uchar code *buffer)     //注意指针类型，
+  12          {                                                                                //在编程中有普通的RAM的指针，也有falsh的指针。
+  13   1         while( *buffer !='\0')                                //由于我们发送的是字符串这个字符串是来自flash存储器。
+  14   1         send_char(*buffer++);                                 //因而我们定义的指针应为 const *
+  15   1                                                                                       //在有些GCC程序中有这个区别，但在keil环境下，这方面没有区别，都可以使用
+  16   1      }
+  17          
+  18          
+  19          void start()
+  20          { 
+  21   1        send_string("\r\n\r\n                       TX-1C BOARD TEST \
+  22   1        \r\n\r\n           Please chose the index number then press Enter \
+  23   1        \r\n\r\n1.LED      2.DA      3.AD      4.key      5.DS18B20      6.1602   \
+  24   1            \r\n7.12864    8.24c02   9.dot     a.12887    b.stepmotor    c.dcmotor\
+  25   1                \r\nd.helm     e.relay   \
+  26   1        \r\n\r\nTXMCU_CMD==>");
+  27   1      }
+  28          
+  29          
+  30          /****************************************************************************
+  31          send a string
+  32          ****************************************************************************/
+  33          
+  34          
+  35          void uart()
+  36          {
+  37   1              TMOD=0x21;
+  38   1              TH1=0xfd;
+  39   1              TL1=0xfd;
+  40   1              TR1=1;
+  41   1              SM0=0;
+  42   1              SM1=1;
+  43   1              REN=1;
+  44   1              EA=1;
+  45   1              ES=1;
+  46   1              PCON=0x80;
+  47   1      }
+  48          void serial() interrupt 4
+  49          {
+  50   1              if(RI)
+  51   1              {       
+  52   2                      RI=0;
+  53   2                      if((SBUF=='1')||(SBUF=='2')||(SBUF=='3')||(SBUF=='4')||(SBUF=='5')||(SBUF=='6')||(SBUF=='7')||(SBUF=='8'
+             -)||(SBUF=='9')||(SBUF=='a')||(SBUF=='b')||(SBUF=='c')||(SBUF=='d')||(SBUF=='e')) message=SBUF;
+  54   2                      //((void (code *) (void)) 0) ();
+C51 COMPILER V9.00   UART                                                                  05/06/2015 09:33:40 PAGE 2   
+
+  55   2              }
+  56   1              //P11 = ~P11;
+  57   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    169    ----
+   CONSTANT SIZE    =    301    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

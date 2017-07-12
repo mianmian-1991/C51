@@ -1,0 +1,251 @@
+BL51 BANKED LINKER/LOCATER V4.13                                                        05/22/2017  11:23:56  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.13, INVOKED BY:
+D:\[SOFTWARE]\KEIL\C51\BIN\BL51.EXE matrix.obj TO matrix RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  matrix.obj (MATRIX)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  matrix (MATRIX)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0006H     UNIT         _DATA_GROUP_
+            DATA    000EH     0004H     UNIT         ?DT?MATRIX
+            IDATA   0012H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     00DBH     UNIT         ?PR?KEYSCAN?MATRIX
+            CODE    00DEH     008CH     UNIT         ?C_C51STARTUP
+            CODE    016AH     001EH     UNIT         ?PR?_DELAYMS?MATRIX
+            CODE    0188H     001EH     UNIT         ?CO?MATRIX
+            CODE    01A6H     0012H     UNIT         ?PR?INIT?MATRIX
+            CODE    01B8H     000CH     UNIT         ?PR?_DISPLAY?MATRIX
+            CODE    01C4H     0009H     UNIT         ?C_INITSEG
+            CODE    01CDH     0008H     UNIT         ?PR?MAIN?MATRIX
+
+
+
+OVERLAY MAP OF MODULE:   matrix (MATRIX)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?MATRIX
+  +--> ?C_INITSEG
+
+?PR?MAIN?MATRIX                -----    -----
+  +--> ?PR?INIT?MATRIX
+  +--> ?PR?KEYSCAN?MATRIX
+
+?PR?KEYSCAN?MATRIX             0008H    0006H
+  +--> ?CO?MATRIX
+  +--> ?PR?_DELAYMS?MATRIX
+  +--> ?PR?_DISPLAY?MATRIX
+
+?PR?_DISPLAY?MATRIX            -----    -----
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/22/2017  11:23:56  PAGE 2
+
+
+  +--> ?CO?MATRIX
+
+
+
+SYMBOL TABLE OF MODULE:  matrix (MATRIX)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MATRIX
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  B:00B0H.5       PUBLIC        T1
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:0198H         PUBLIC        WeiTable
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  B:00B8H.4       PUBLIC        PS
+  B:0090H.1       PUBLIC        T2EX
+  B:00B0H.4       PUBLIC        s2
+  B:00D0H.2       PUBLIC        OV
+  C:01CDH         PUBLIC        main
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  B:00C8H.5       PUBLIC        RCLK
+  B:00C8H.4       PUBLIC        TCLK
+  C:0188H         PUBLIC        DigitronTable
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:01A6H         PUBLIC        init
+  C:019EH         PUBLIC        Row
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  B:00C8H.0       PUBLIC        CP_RL2
+  B:00A0H.6       PUBLIC        Duanxuan
+  B:00A8H.1       PUBLIC        ET0
+  D:000EH         PUBLIC        key
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/22/2017  11:23:56  PAGE 3
+
+
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  B:0098H.7       PUBLIC        SM0
+  B:0098H.6       PUBLIC        SM1
+  B:0098H.5       PUBLIC        SM2
+  C:016AH         PUBLIC        _delayms
+  B:00B8H.1       PUBLIC        PT0
+  B:00B8H.3       PUBLIC        PT1
+  B:00D0H.3       PUBLIC        RS0
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  B:00B8H.2       PUBLIC        PX1
+  C:01B8H         PUBLIC        _display
+  B:00C8H.3       PUBLIC        EXEN2
+  B:00A0H.7       PUBLIC        Weixuan
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  B:00B0H.0       PUBLIC        RXD
+  B:00B0H.1       PUBLIC        TXD
+  C:01A2H         PUBLIC        Column
+  C:0003H         PUBLIC        keyscan
+  D:0010H         PUBLIC        N_50ms
+  B:00D0H.5       PUBLIC        F0
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:01CDH         LINE#         40
+  C:01CDH         LINE#         41
+  C:01CDH         LINE#         42
+  C:01D0H         LINE#         43
+  C:01D0H         LINE#         44
+  C:01D0H         LINE#         45
+  C:01D3H         LINE#         46
+  -------         ENDPROC       MAIN
+  -------         PROC          INIT
+  C:01A6H         LINE#         49
+  C:01A6H         LINE#         50
+  C:01A6H         LINE#         51
+  C:01A8H         LINE#         52
+  C:01ABH         LINE#         53
+  C:01ADH         LINE#         54
+  C:01B0H         LINE#         55
+  C:01B2H         LINE#         56
+  C:01B5H         LINE#         57
+  C:01B7H         LINE#         58
+  -------         ENDPROC       INIT
+  -------         PROC          KEYSCAN
+  -------         DO            KEYSCAN
+  D:0008H         SYMBOL        i
+  D:000AH         SYMBOL        temp
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/22/2017  11:23:56  PAGE 4
+
+
+  D:000CH         SYMBOL        key
+  -------         ENDDO         key
+  C:0003H         LINE#         60
+  C:0003H         LINE#         61
+  C:0003H         LINE#         63
+  C:0008H         LINE#         64
+  C:0008H         LINE#         65
+  C:0010H         LINE#         66
+  C:0019H         LINE#         67
+  C:0022H         LINE#         68
+  C:0022H         LINE#         69
+  C:0029H         LINE#         70
+  C:0031H         LINE#         71
+  C:003AH         LINE#         72
+  C:0043H         LINE#         73
+  C:0043H         LINE#         74
+  C:0059H         LINE#         75
+  C:0059H         LINE#         76
+  C:0059H         LINE#         77
+  C:006AH         LINE#         78
+  C:006CH         LINE#         79
+  C:006CH         LINE#         80
+  C:0081H         LINE#         81
+  C:0083H         LINE#         82
+  C:0083H         LINE#         83
+  C:0098H         LINE#         84
+  C:009AH         LINE#         85
+  C:009AH         LINE#         86
+  C:00AFH         LINE#         87
+  C:00AFH         LINE#         88
+  C:00AFH         LINE#         89
+  C:00B7H         LINE#         90
+  C:00B7H         LINE#         91
+  C:00C0H         LINE#         92
+  C:00C7H         LINE#         93
+  C:00C9H         LINE#         94
+  C:00C9H         LINE#         95
+  C:00C9H         LINE#         96
+  C:00DDH         LINE#         104
+  -------         ENDPROC       KEYSCAN
+  -------         PROC          _DISPLAY
+  D:0006H         SYMBOL        number
+  C:01B8H         LINE#         106
+  C:01B8H         LINE#         107
+  C:01B8H         LINE#         108
+  C:01BAH         LINE#         109
+  C:01C1H         LINE#         110
+  C:01C3H         LINE#         111
+  -------         ENDPROC       _DISPLAY
+  -------         PROC          _DELAYMS
+  D:0006H         SYMBOL        xms
+  -------         DO            xms
+  D:0006H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         j
+  C:016AH         LINE#         113
+  C:016AH         LINE#         114
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/22/2017  11:23:56  PAGE 5
+
+
+  C:016AH         LINE#         116
+  C:0173H         LINE#         117
+  C:0187H         LINE#         118
+  -------         ENDPROC       _DELAYMS
+  -------         ENDMOD        MATRIX
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

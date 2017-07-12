@@ -1,0 +1,148 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+F:\Test\51test\BoardTest\Test.uv2
+Project File Date:  04/29/2014
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+linking...
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  ?C_START
+    MODULE:  .\STARTUP.obj (?C_STARTUP)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  ?C_START
+    MODULE:  .\STARTUP.obj (?C_STARTUP)
+    ADDRESS: 000DH
+Program Size: data=9.0 xdata=0 code=15
+creating hex file from "Test"...
+"Test" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling 24c02.c...
+24c02.c(4): warning C318: can't open file 'define.h'
+24C02.C(20): error C202: 'dula': undefined identifier
+24C02.C(22): error C202: 'dula': undefined identifier
+24C02.C(23): error C202: 'dula': undefined identifier
+24C02.C(25): error C202: 'wela': undefined identifier
+24C02.C(27): error C202: 'wela': undefined identifier
+24C02.C(28): error C202: 'wela': undefined identifier
+24C02.C(31): error C202: 'dula': undefined identifier
+24C02.C(33): error C202: 'dula': undefined identifier
+24C02.C(34): error C202: 'dula': undefined identifier
+24C02.C(36): error C202: 'wela': undefined identifier
+24C02.C(38): error C202: 'wela': undefined identifier
+24C02.C(39): error C202: 'wela': undefined identifier
+24C02.C(53): error C202: 'scl': undefined identifier
+24C02.C(53): error C202: 'sda': undefined identifier
+24C02.C(56): error C202: 'sda': undefined identifier
+24C02.C(56): error C202: 'scl': undefined identifier
+24C02.C(56): error C202: 'sda': undefined identifier
+24C02.C(56): error C202: 'scl': undefined identifier
+24C02.C(59): error C202: 'sda': undefined identifier
+24C02.C(59): error C202: 'scl': undefined identifier
+24C02.C(59): error C202: 'sda': undefined identifier
+24C02.C(65): error C202: 'scl': undefined identifier
+24C02.C(65): error C202: 'sda': undefined identifier
+24C02.C(65): error C202: 'scl': undefined identifier
+24C02.C(66): error C202: 'scl': undefined identifier
+24C02.C(66): error C202: 'sda': undefined identifier
+24C02.C(72): error C202: 'scl': undefined identifier
+24C02.C(72): error C202: 'sda': undefined identifier
+24C02.C(74): error C202: 'scl': undefined identifier
+24C02.C(75): error C202: 'sda': undefined identifier
+24C02.C(78): error C202: 'scl': undefined identifier
+24C02.C(84): error C202: 'scl': undefined identifier
+24C02.C(85): error C202: 'sda': undefined identifier
+24C02.C(86): error C202: 'scl': undefined identifier
+24C02.C(141): error C202: 'wela': undefined identifier
+24C02.C(142): error C202: 'wela': undefined identifier
+compiling 1602.c...
+1602.c(2): warning C318: can't open file 'define.h'
+1602.C(3): error C129: missing ';' before 'table1_1602'
+compiling 12864.c...
+12864.c(3): warning C318: can't open file 'define.h'
+12864.C(49): error C202: 'LCD_RS': undefined identifier
+12864.C(50): error C202: 'LCD_RW': undefined identifier
+12864.C(51): error C202: 'LCD_EN': undefined identifier
+12864.C(54): error C202: 'LCD_EN': undefined identifier
+12864.C(66): error C202: 'LCD_RS': undefined identifier
+12864.C(67): error C202: 'LCD_RW': undefined identifier
+12864.C(68): error C202: 'LCD_EN': undefined identifier
+12864.C(73): error C202: 'LCD_EN': undefined identifier
+12864.C(75): error C202: 'LCD_EN': undefined identifier
+12864.C(86): error C202: 'LCD_RS': undefined identifier
+12864.C(87): error C202: 'LCD_RW': undefined identifier
+12864.C(88): error C202: 'LCD_EN': undefined identifier
+12864.C(91): error C202: 'LCD_EN': undefined identifier
+12864.C(93): error C202: 'LCD_EN': undefined identifier
+12864.C(103): error C202: 'LCD_PSB': undefined identifier
+12864.C(123): error C202: 'wela': undefined identifier
+12864.C(124): error C202: 'dula': undefined identifier
+compiling ad.c...
+ad.c(3): warning C318: can't open file 'define.h'
+ad.c(4): warning C318: can't open file 'da.h'
+AD.C(5): error C129: missing ';' before 'code'
+compiling da.c...
+da.c(2): warning C318: can't open file 'define.h'
+DA.C(6): error C202: 'uchar': undefined identifier
+DA.C(6): error C141: syntax error near 'j'
+DA.C(7): error C202: 'j': undefined identifier
+DA.C(8): error C202: 'k': undefined identifier
+DA.C(16): error C202: 'wela': undefined identifier
+DA.C(17): error C202: 'dula': undefined identifier
+DA.C(18): error C202: 'csda': undefined identifier
+DA.C(20): error C202: 'dawr': undefined identifier
+compiling ds18b20.c...
+compiling key.c...
+compiling led.c...
+led.c(3): warning C318: can't open file 'define.h'
+LED.C(14): error C202: 'uchar': undefined identifier
+LED.C(14): error C141: syntax error near 'liushui'
+LED.C(15): error C202: 'k': undefined identifier
+LED.C(18): error C202: 'liushui': undefined identifier
+LED.C(21): error C202: 'beep': undefined identifier
+LED.C(23): error C202: 'beep': undefined identifier
+LED.C(24): error C202: 'j': undefined identifier
+LED.C(25): error C202: 'k': undefined identifier
+LED.C(26): error C202: 'j': undefined identifier
+compiling main.c...
+main.c(2): warning C318: can't open file 'define.h'
+main.c(3): warning C318: can't open file 'uart.h'
+main.c(4): warning C318: can't open file 'led.h'
+main.c(5): warning C318: can't open file 'da.h'
+main.c(6): warning C318: can't open file 'ad.h'
+main.c(7): warning C318: can't open file '18b20.h'
+main.c(8): warning C318: can't open file '24c02.h'
+main.c(9): warning C318: can't open file '1602.h'
+main.c(10): warning C318: can't open file '12864.h'
+main.c(12): warning C318: can't open file 'key.h'
+MAIN.C(31): error C202: 'dula': undefined identifier
+MAIN.C(32): error C202: 'wela': undefined identifier
+compiling uart.c...
+uart.c(2): warning C318: can't open file 'define.h'
+UART.C(5): error C141: syntax error near 'date', expected ')'
+UART.C(8): error C202: 'date': undefined identifier
+UART.C(13): error C141: syntax error near 'code', expected ')'
+UART.C(15): error C202: 'buffer': undefined identifier
+UART.C(16): error C202: 'buffer': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling 24c02.c...
+compiling 1602.c...
+compiling 12864.c...
+compiling ad.c...
+compiling da.c...
+compiling ds18b20.c...
+compiling key.c...
+compiling led.c...
+compiling main.c...
+compiling uart.c...
+linking...
+Program Size: data=64.2 xdata=0 code=3756
+creating hex file from "Test"...
+"Test" - 0 Error(s), 0 Warning(s).

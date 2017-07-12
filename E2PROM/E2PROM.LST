@@ -1,0 +1,261 @@
+C51 COMPILER V6.12  E2PROM                                                                 05/31/2017 12:31:43 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE E2PROM
+OBJECT MODULE PLACED IN .\E2PROM.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\E2PROM.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          // 段选 U1
+   7          uchar code DigitronTable[] =
+   8          {
+   9              0x3f, 0x06, 0x5b, 0x4f,
+  10              0x66, 0x6d, 0x7d, 0x07,
+  11              0x7f, 0x6f, 0x77, 0x7c,
+  12              0x39, 0x5e, 0x79, 0x71
+  13          };
+  14          
+  15          // 位选 U2
+  16          uchar code WeiTable[] =
+  17          {
+  18              0xfe, 0xfd, 0xfb, 0xf7, 0xef, 0xdf
+  19          };
+  20          
+  21          sbit Duanxuan = P2^6;
+  22          sbit Weixuan = P2^7;
+  23          sbit SDA = P2^0;
+  24          sbit SCL = P2^1;
+  25          
+  26          void delay();
+  27          void delayms(uint);
+  28          void init_T0();
+  29          void display(uchar);
+  30          void write(uchar, uchar);
+  31          uchar read(uchar);
+  32          void write_byte(uchar);
+  33          uchar read_byte();
+  34          void init();
+  35          void start();
+  36          void stop();
+  37          void respons();
+  38          
+  39          uchar sec, cnt;
+  40          uchar dis[2];
+  41          bit flag;
+  42          
+  43          void main()
+  44          {
+  45   1      	init();
+  46   1      	sec = read(0x01);
+  47   1      	if(sec>=100)
+  48   1      		sec = 0;
+  49   1      	init_T0();
+  50   1      	while(1)
+  51   1      	{
+  52   2      		//display(sec);
+  53   2      		/*
+  54   2      		if(flag==1)
+  55   2      		{
+C51 COMPILER V6.12  E2PROM                                                                 05/31/2017 12:31:43 PAGE 2   
+
+  56   2      			flag = 0;
+  57   2      			write(0x02,sec);
+  58   2      		}
+  59   2      		*/
+  60   2      	}
+  61   1      }
+  62          
+  63          void init_T0()
+  64          {
+  65   1      	TMOD = 0x01;
+  66   1      	TH0 = (65536-45872)/256;
+  67   1      	TL0 = (65536-45872)%256;
+  68   1      	EA = 1;
+  69   1      	ET0 = 1;
+  70   1      	TR0 = 1;
+  71   1      }
+  72          
+  73          void interruptT0() interrupt 1
+  74          {
+  75   1      	TH0 = (65536-45872)/256;
+  76   1      	TL0 = (65536-45872)%256;
+  77   1      	cnt++;
+  78   1      	if(cnt>=10)
+  79   1      	{
+  80   2      		cnt = 0;
+  81   2      		sec++;
+  82   2      		if(sec>=100)
+  83   2      			sec = 0;
+  84   2      		write(0x01,sec);
+  85   2      		//flag = 1;
+  86   2      	}
+  87   1      }
+  88          
+  89          void display(uchar num)
+  90          {
+  91   1      	uchar i;
+  92   1      	
+  93   1      	dis[0] = num / 10;
+  94   1      	dis[1] = num % 10;
+  95   1      
+  96   1      	for(i=0;i<2;i++)
+  97   1      	{
+  98   2      		Duanxuan = 1;
+  99   2      		P0 = DigitronTable[dis[i]];
+ 100   2      		Duanxuan = 0;
+ 101   2      		P0 = 0xff;
+ 102   2      		Weixuan = 1;
+ 103   2      		P0 = WeiTable[i];
+ 104   2      		Weixuan = 0;
+ 105   2      		delayms(3);
+ 106   2      	}
+ 107   1      }
+ 108          
+ 109          void init()		// 双双拉高
+ 110          {
+ 111   1      	SDA = 1;	// 注意先拉高 SDA，否则可能检测到 SDA 上升沿变 stop
+ 112   1      	delay();
+ 113   1      	SCL = 1;
+ 114   1      	delay();
+ 115   1      }
+ 116          
+ 117          void write(uchar address, uchar datas)
+C51 COMPILER V6.12  E2PROM                                                                 05/31/2017 12:31:43 PAGE 3   
+
+ 118          {
+ 119   1      	start();
+ 120   1      	write_byte(0xa0);	// 写-控制字，器件 1010，A2A1A0 = 000，RW = 0
+ 121   1      	respons();
+ 122   1      	write_byte(address);
+ 123   1      	respons();
+ 124   1      	write_byte(datas);
+ 125   1      	respons();
+ 126   1      	stop();
+ 127   1      }
+ 128          
+ 129          uchar read(uchar address)
+ 130          {
+ 131   1      	uchar datas;
+ 132   1      	
+ 133   1      	start();
+ 134   1      	write_byte(0xa0);	// 写-控制字，器件 1010，A2A1A0 = 000，RW = 0
+ 135   1      	respons();
+ 136   1      	write_byte(address);
+ 137   1      	respons();
+ 138   1      	start();
+ 139   1      	write_byte(0xa1);	// 读-控制字，器件 1010，A2A1A0 = 000，RW = 1
+ 140   1      	respons();
+ 141   1      	datas = read_byte();
+ 142   1      	stop();
+ 143   1      	return datas;
+ 144   1      }
+ 145          
+ 146          void write_byte(uchar byte2send)
+ 147          {
+ 148   1      	uchar i;
+ 149   1      
+ 150   1      	for(i=0;i<8;i++)
+ 151   1      	{
+ 152   2      		byte2send<<=1;
+ 153   2      		SCL = 0;
+ 154   2      		delay();
+ 155   2      		SDA = CY;
+ 156   2      		delay();
+ 157   2      		SCL = 1;
+ 158   2      		delay();
+ 159   2      	}
+ 160   1      
+ 161   1      	SCL = 0;
+ 162   1      	delay();
+ 163   1      	SDA = 1;
+ 164   1      	delay();
+ 165   1      }
+ 166          
+ 167          uchar read_byte()
+ 168          {
+ 169   1      	uchar i, recieve;
+ 170   1      
+ 171   1      	SCL = 0;
+ 172   1      	delay();
+ 173   1      	SDA = 1;
+ 174   1      	delay();
+ 175   1      	
+ 176   1      	for(i=0;i<8;i++)
+ 177   1      	{
+ 178   2      		SCL = 1;
+ 179   2      		delay();
+C51 COMPILER V6.12  E2PROM                                                                 05/31/2017 12:31:43 PAGE 4   
+
+ 180   2      		recieve = (recieve<<1) | SDA;
+ 181   2      		SCL = 0;
+ 182   2      		delay();
+ 183   2      	}
+ 184   1      
+ 185   1      	return recieve;
+ 186   1      }
+ 187          
+ 188          void start()	// 下降沿
+ 189          {
+ 190   1      	SDA = 1;
+ 191   1      	delay();
+ 192   1      	SCL = 1;
+ 193   1      	delay();
+ 194   1      	SDA = 0;
+ 195   1      	delay();
+ 196   1      }
+ 197          
+ 198          void stop()		// 上升沿
+ 199          {
+ 200   1      	SDA = 0;
+ 201   1      	delay();
+ 202   1      	SCL = 1;
+ 203   1      	delay();
+ 204   1      	SDA = 1;
+ 205   1      	delay();
+ 206   1      }
+ 207          
+ 208          void respons()		// 等待 SDA 被拉低
+ 209          {
+ 210   1      	uchar i;
+ 211   1      
+ 212   1      	SCL = 1;
+ 213   1      	delay();
+ 214   1      	while((SDA==1)&&(i++<250));
+ 215   1      	SCL = 0;
+ 216   1      	delay();
+ 217   1      }
+ 218          
+ 219          
+ 220          void delay()
+ 221          { ; ; }
+ 222          
+ 223          void delayms(uint xms)
+ 224          {
+ 225   1      	uint i,j;
+ 226   1      	for(i=0;i<xms;i++)
+ 227   1      		for(j=0;j<110;j++);
+ 228   1      }
+ 229          
+ 230          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    464    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V6.12  E2PROM                                                                 05/31/2017 12:31:43 PAGE 5   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,111 @@
+C51 COMPILER V9.00   1602                                                                  05/06/2015 09:33:41 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE 1602
+OBJECT MODULE PLACED IN 1602.OBJ
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE 1602.c BROWSE INCDIR(D:\Keil_v5\C51\INC\STC) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <config.h>
+   2          uchar code table1_1602[]="TX-1C TEST   ";
+   3          uchar code table2_1602[]="WWW.TXMCU.COM";
+   4          void delay_1602(uint x)
+   5          {
+   6   1              uint a,b;
+   7   1              if(message!='6') return;
+   8   1              for(a=x;a>0;a--)
+   9   1                      for(b=10;b>0;b--); 
+  10   1      }
+  11          
+  12          void delay1_1602(uint x)
+  13          {
+  14   1              uint a,b;
+  15   1              if(message!='6') return;
+  16   1              for(a=x;a>0;a--)
+  17   1                      for(b=100;b>0;b--); 
+  18   1      }
+  19          
+  20          void lcd_write_com(uchar com)
+  21          {
+  22   1              P0=com;
+  23   1              rs=0;
+  24   1              lcden=0;
+  25   1              delay_1602(10);
+  26   1              lcden=1;
+  27   1              delay_1602(10);
+  28   1              lcden=0;
+  29   1              
+  30   1      }
+  31          
+  32          void lcd_write_date(uchar date)
+  33          {
+  34   1              P0=date;
+  35   1              rs=1;
+  36   1              lcden=0;
+  37   1              delay_1602(10);
+  38   1              lcden=1;
+  39   1              delay_1602(10);
+  40   1              lcden=0;
+  41   1              
+  42   1      }
+  43          
+  44          void init()
+  45          {
+  46   1              lcd_write_com(0x38);
+  47   1              delay_1602(20);
+  48   1              lcd_write_com(0x0f);
+  49   1              delay_1602(20);
+  50   1              lcd_write_com(0x06);
+  51   1              delay_1602(20);
+  52   1              lcd_write_com(0x01);
+  53   1              delay_1602(20); 
+  54   1      }
+  55          
+C51 COMPILER V9.00   1602                                                                  05/06/2015 09:33:41 PAGE 2   
+
+  56          void tx1602_main()
+  57          {
+  58   1              uchar a;
+  59   1              system_init();
+  60   1              init();
+  61   1              lcd_write_com(0x80+17);
+  62   1              delay_1602(20);
+  63   1              for(a=0;a<13;a++)
+  64   1              {
+  65   2                      //if(message!='6') break;
+  66   2                      lcd_write_date(table1_1602[a]);
+  67   2                      delay_1602(20);         
+  68   2              }
+  69   1              lcd_write_com(0xc0+17);
+  70   1              delay_1602(50);
+  71   1              for(a=0;a<13;a++)
+  72   1              {
+  73   2                      //if(message!='6') break;
+  74   2                      lcd_write_date(table2_1602[a]);
+  75   2                      delay_1602(40);         
+  76   2              }       
+  77   1              for(a=0;a<16;a++)
+  78   1              {
+  79   2                      //if(message!='6') break;
+  80   2                      lcd_write_com(0x18);
+  81   2                      delay1_1602(200);
+  82   2              }
+  83   1              delay1_1602(1000);
+  84   1              while(message=='6') ;
+  85   1      }
+  86          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    249    ----
+   CONSTANT SIZE    =     28    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

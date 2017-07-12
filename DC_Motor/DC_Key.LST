@@ -1,0 +1,151 @@
+C51 COMPILER V6.12  DC_KEY                                                                 06/07/2017 17:38:36 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE DC_KEY
+OBJECT MODULE PLACED IN .\DC_Key.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\DC_Key.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          sbit DC = P1^7;
+   7          sbit Duanxuan = P2^6;
+   8          sbit Weixuan = P2^7;
+   9          sbit speed_up = P3^4;
+  10          sbit speed_down = P3^5;
+  11          
+  12          // ถฮัก U1
+  13          uchar code DigitronTable[] =
+  14          {
+  15              0x3f, 0x06, 0x5b, 0x4f,
+  16              0x66, 0x6d, 0x7d, 0x07,
+  17              0x7f, 0x6f, 0x77, 0x7c,
+  18              0x39, 0x5e, 0x79, 0x71
+  19          };
+  20          
+  21          // ฮปัก U2
+  22          uchar code WeiTable[] =
+  23          {
+  24              0xfe, 0xfd, 0xfb, 0xf7, 0xef, 0xdf
+  25          };
+  26          
+  27          void init();
+  28          void scan_key();
+  29          void PWM_drive();
+  30          void display(uchar);
+  31          void delay(uint);
+  32          
+  33          uchar max_num = 4;
+  34          char num = 0;
+  35          uchar high_num = 0, low_num;
+  36          
+  37          void main()
+  38          {
+  39   1      	init();
+  40   1      	while(1)
+  41   1      	{
+  42   2      		scan_key();
+  43   2      		PWM_drive();
+  44   2      	}
+  45   1      }
+  46          
+  47          void init()
+  48          {
+  49   1      	DC = 0;
+  50   1      
+  51   1      	low_num = max_num;
+  52   1      
+  53   1      	Duanxuan = 1;
+  54   1      	P0 = DigitronTable[0];
+  55   1      	Duanxuan = 0;
+C51 COMPILER V6.12  DC_KEY                                                                 06/07/2017 17:38:36 PAGE 2   
+
+  56   1      
+  57   1      	P0 = 0xff;
+  58   1      
+  59   1      	Weixuan = 1;
+  60   1      	P0 = WeiTable[0];
+  61   1      	Weixuan = 0;
+  62   1      }
+  63          
+  64          void scan_key()
+  65          {
+  66   1      	if(speed_up==0)
+  67   1      	{
+  68   2      		delay(10);
+  69   2      		if(speed_up==0)
+  70   2      		{
+  71   3      			num++;
+  72   3      			if(num>4)
+  73   3      				num = 4;
+  74   3      			while(speed_up==0);
+  75   3      		}
+  76   2      	}
+  77   1      	if(speed_down==0)
+  78   1      	{
+  79   2      		delay(10);
+  80   2      		if(speed_down==0)
+  81   2      		{
+  82   3      			num--;
+  83   3      			if(num<0)
+  84   3      				num = 0;
+  85   3      			while(speed_down==0);
+  86   3      		}
+  87   2      	}
+  88   1      }
+  89          
+  90          void PWM_drive()
+  91          {
+  92   1      	uchar i;
+  93   1      
+  94   1      	high_num = num;
+  95   1      	low_num = max_num - num;
+  96   1      	
+  97   1      	for(i=0;i<high_num;i++)
+  98   1      	{
+  99   2      		DC = 1;
+ 100   2      		display(num);
+ 101   2      	}
+ 102   1      
+ 103   1      	for(i=0;i<low_num;i++)
+ 104   1      	{
+ 105   2      		DC = 0;
+ 106   2      		display(num);
+ 107   2      	}
+ 108   1      }
+ 109          
+ 110          void display(uchar num)
+ 111          {
+ 112   1      	Duanxuan = 1;
+ 113   1      	P0 = DigitronTable[num];
+ 114   1      	Duanxuan = 0;
+ 115   1      
+ 116   1      	delay(30);
+ 117   1      }
+C51 COMPILER V6.12  DC_KEY                                                                 06/07/2017 17:38:36 PAGE 3   
+
+ 118          
+ 119          void delay(uint x)
+ 120          {
+ 121   1      	uint i,j;
+ 122   1      	for(i=0;i<x;i++)
+ 123   1      		for(j=0;j<110;j++);	
+ 124   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    206    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

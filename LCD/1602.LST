@@ -1,0 +1,191 @@
+C51 COMPILER V6.12  1602                                                                   06/06/2017 22:44:33 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE 1602
+OBJECT MODULE PLACED IN .\1602.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\1602.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #define uint unsigned int 
+   3          #define uchar unsigned char
+   4          #define COMMAND 1
+   5          #define DATA 0
+   6          
+   7          uchar code row1[] = "HEY, I AM";
+   8          uchar code row2[] = "WATCHING";
+   9          uchar code row3[] = ":) :) :) :) :)";
+  10          
+  11          sbit LCD_E = P3^4;
+  12          sbit LCD_RS = P3^5;
+  13          sbit Duanxuan = P2^6;
+  14          sbit Weixuan = P2^7;
+  15          
+  16          void delay(uint);
+  17          void init();
+  18          void write_com(uchar);
+  19          void write_data(uchar);
+  20          void write(uchar,bit);
+  21          
+  22          uint cnt;
+  23          
+  24          /*
+  25          void main()
+  26          {
+  27          	init();
+  28          	
+  29          	write_com(0x80);	// 7.2.4 RAM 地址定到第一行以写入
+  30          	for(cnt=0;cnt<sizeof(row1)/sizeof(uchar);cnt++)
+  31          	{
+  32          		write_data(row1[cnt]);
+  33          		delay(5);
+  34          	}
+  35          
+  36          	write_com(0x80+0x40);	// 7.2.4 RAM 地址定到第二行以写入
+  37          	for(cnt=0;cnt<sizeof(row2)/sizeof(uchar);cnt++)
+  38          	{
+  39          		write_data(row2[cnt]);
+  40          		delay(5);
+  41          	}
+  42          	
+  43          	while(1);
+  44          }
+  45          */
+  46          
+  47          /*
+  48          void init()
+  49          {
+  50          	Duanxuan = 0;	// 关闭数码管显示
+  51          	Weixuan = 0;
+  52          
+  53          	LCD_E = 0;
+  54          	write_com(0x38);	// 7.2.6
+  55          	write_com(0x0c);	// 7.2.7
+C51 COMPILER V6.12  1602                                                                   06/06/2017 22:44:33 PAGE 2   
+
+  56          	write_com(0x06);	// 7.2.7
+  57          	write_com(0x01);	// 7.2.5
+  58          }
+  59          */
+  60          
+  61          void main()
+  62          {
+  63   1      	init();
+  64   1      
+  65   1      	//delay(2000);
+  66   1      
+  67   1      	write(0x80,COMMAND);	// 7.2.4 RAM 地址定到第一行以写入	
+  68   1      	cnt = 0;
+  69   1      	while(row1[cnt]!='\0')
+  70   1      	{
+  71   2      		write(row1[cnt],DATA);
+  72   2      		delay(300);
+  73   2      		//write(0x10,COMMAND);
+  74   2      		cnt++;
+  75   2      	}
+  76   1      
+  77   1      	write(0x80+0x40,COMMAND);	// 7.2.4 RAM 地址定到第二行以写入
+  78   1      	for(cnt=0;cnt<(sizeof(row2)/sizeof(uchar)-1);cnt++)		// 字符串后面有个 '\0'
+  79   1      	{
+  80   2      		write(row2[cnt],DATA);
+  81   2      		delay(300);
+  82   2      	}
+  83   1      
+  84   1      	write(0x80+0x10,COMMAND);
+  85   1      	cnt = 0;
+  86   1      	while(row3[cnt]!='\0')
+  87   1      	{
+  88   2      		write(row3[cnt],DATA);
+  89   2      		delay(5);
+  90   2      		cnt++;
+  91   2      	}
+  92   1      
+  93   1      	write(0x80+0x50,COMMAND);
+  94   1      	cnt = 0;
+  95   1      	while(row3[cnt]!='\0')
+  96   1      	{
+  97   2      		write(row3[cnt],DATA);
+  98   2      		delay(5);
+  99   2      		cnt++;
+ 100   2      	}
+ 101   1      
+ 102   1      	for(cnt=0;cnt<16;cnt++)
+ 103   1      	{
+ 104   2      		write(0x18,COMMAND);
+ 105   2      		delay(300);
+ 106   2      	}
+ 107   1      
+ 108   1      	while(1);
+ 109   1      }
+ 110          
+ 111          void init()
+ 112          {
+ 113   1      	Duanxuan = 0;
+ 114   1      	Weixuan = 0;
+ 115   1      	LCD_E = 0;
+ 116   1      	write(0x38,COMMAND);
+ 117   1      	write(0x0f,COMMAND);
+C51 COMPILER V6.12  1602                                                                   06/06/2017 22:44:33 PAGE 3   
+
+ 118   1      	write(0x06,COMMAND);
+ 119   1      	write(0x01,COMMAND);
+ 120   1      }
+ 121          
+ 122          void write(uchar com_data, bit comORdata)
+ 123          {
+ 124   1      	if(comORdata == COMMAND)
+ 125   1      		LCD_RS = 0;		// 指令模式
+ 126   1      	else
+ 127   1      		LCD_RS = 1;		// 数据模式
+ 128   1      	P0 = com_data;		// 送到 P0 口
+ 129   1      	delay(5);
+ 130   1      	LCD_E = 1;		// 使能，送入 RAM
+ 131   1      	delay(5);
+ 132   1      	LCD_E = 0;
+ 133   1      }
+ 134          
+ 135          void write_com(uchar coms)
+ 136          {
+ 137   1      	LCD_RS = 0;		// 指令模式
+ 138   1      	P0 = coms;		// 指令送到 P0 口
+ 139   1      	delay(5);
+ 140   1      	LCD_E = 1;		// 使能，指令送入 RAM
+ 141   1      	delay(5);
+ 142   1      	LCD_E = 0;
+ 143   1      }
+ 144          
+ 145          void write_data(uchar datas)
+ 146          {
+ 147   1      	LCD_RS = 1;		// 数据
+ 148   1      	P0 = datas;		// 数据送到 P0 口
+ 149   1      	delay(5);
+ 150   1      	LCD_E = 1;		// 使能，数据送入 RAM
+ 151   1      	delay(5);
+ 152   1      	LCD_E = 0;
+ 153   1      }
+ 154          
+ 155          void delay(uint x)
+ 156          {
+ 157   1      	uint i,j;
+ 158   1      	for(i=0;i<x;i++)
+ 159   1      		for(j=0;j<110;j++);
+ 160   1      }
+ 161          
+ 162          
+ 163          
+ 164          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    328    ----
+   CONSTANT SIZE    =     34    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

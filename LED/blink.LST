@@ -1,0 +1,52 @@
+C51 COMPILER V6.12  BLINK                                                                  10/17/2016 10:16:49 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE BLINK
+OBJECT MODULE PLACED IN .\blink.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\blink.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          
+   3          #define uint unsigned int
+   4          
+   5          void delayms(uint);
+   6          
+   7          sbit led1 = P1^0;
+   8          
+   9          void main()
+  10          {
+  11   1      	while(1)
+  12   1      	{
+  13   2      		led1 = 0;
+  14   2      		delayms(200);
+  15   2      		led1 = 1;
+  16   2      		delayms(500);
+  17   2      	}	
+  18   1      }
+  19          
+  20          void delayms(uint xms)
+  21          {
+  22   1      	uint i,j;
+  23   1      	for(i=xms;i>0;i--)
+  24   1      		for(j=110;j>0;j--);
+  25   1      }
+  26          
+  27          
+  28          
+  29          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     50    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

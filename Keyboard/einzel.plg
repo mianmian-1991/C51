@@ -1,0 +1,15 @@
+Build target 'Target 1'
+compiling einzel.c...
+.\EINZEL.C(115): warning C206: 'itoa': missing function-prototype
+.\EINZEL.C(115): error C267: 'itoa': requires ANSI-style prototype
+Target not created
+Build target 'Target 1'
+compiling einzel.c...
+.\EINZEL.C(116): warning C206: 'itoa': missing function-prototype
+.\EINZEL.C(116): error C267: 'itoa': requires ANSI-style prototype
+Target not created
+Build target 'Target 1'
+compiling einzel.c...
+.\EINZEL.C(116): warning C206: 'itoa': missing function-prototype
+.\EINZEL.C(116): error C267: 'itoa': requires ANSI-style prototype
+Target not created

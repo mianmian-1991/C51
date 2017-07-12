@@ -1,0 +1,19 @@
+"main.obj",
+"uart.obj",
+"led.obj",
+"da.obj",
+"ad.obj",
+"key.obj",
+"ds18b20.obj",
+"1602.obj",
+"12864.obj",
+"24c02.obj",
+"dot.obj",
+"ds12c887.obj",
+"step.obj",
+"dc_motor.obj",
+"helm_motor.obj",
+"relay.obj",
+"interrupt.obj" 
+TO "BoardTest" 
+RAMSIZE(256) 

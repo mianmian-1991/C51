@@ -1,0 +1,175 @@
+C51 COMPILER V6.12  EINZEL                                                                 05/31/2017 17:43:47 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE EINZEL
+OBJECT MODULE PLACED IN .\einzel.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\einzel.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #include<stdlib.h>
+   3          #include<string.h>
+   4          
+   5          #define uchar unsigned char
+   6          #define uint unsigned int
+   7          
+   8          sbit Weixuan = P2^7;
+   9          sbit Duanxuan = P2^6;
+  10          
+  11          sbit s2 = P3^4;
+  12          sbit s3 = P3^5;
+  13          sbit s4 = P3^6;
+  14          sbit s5 = P3^7;
+  15          
+  16          uchar code DigitronTable[] =
+  17          {
+  18              0x3f, 0x06, 0x5b, 0x4f,
+  19              0x66, 0x6d, 0x7d, 0x07,
+  20              0x7f, 0x6f, 0x77, 0x7c,
+  21              0x39, 0x5e, 0x79, 0x71
+  22          };
+  23          
+  24          uchar code WeiTable[] =
+  25          {
+  26              0xfe, 0xfd, 0xfb, 0xf7, 0xef, 0xdf
+  27          };
+  28          
+  29          int num = 0;
+  30          uint cnt = 0;
+  31          uint N_50ms = 65536 - 45872;
+  32          uchar string[6];
+  33          
+  34          void init();
+  35          void keyscan();
+  36          void display(uint);
+  37          void delayms(uint);
+  38          
+  39          void main()
+  40          {
+  41   1      	init();
+  42   1      	while(1)
+  43   1      	{
+  44   2      		keyscan();
+  45   2      		display(num);
+  46   2      	}
+  47   1      }
+  48          
+  49          void init()
+  50          {
+  51   1      	TMOD = 0x01;
+  52   1      	TH0 = N_50ms / 256;
+  53   1      	TL0 = N_50ms % 256;	
+  54   1      	EA = 1;
+  55   1      	ET0 = 1;
+C51 COMPILER V6.12  EINZEL                                                                 05/31/2017 17:43:47 PAGE 2   
+
+  56   1      }
+  57          
+  58          void keyscan()
+  59          {
+  60   1      	if(s2==0)
+  61   1      	{
+  62   2      		delayms(10);
+  63   2      		if(s2==0)
+  64   2      		{
+  65   3      			num++;
+  66   3      			if(num>=60)
+  67   3      				num = 0;
+  68   3      			while(s2==0)
+  69   3      				display(num);
+  70   3      		}
+  71   2      	}
+  72   1      
+  73   1      	if(s3==0)
+  74   1      	{
+  75   2      		delayms(10);
+  76   2      		if(s3==0)
+  77   2      		{
+  78   3      			num--;
+  79   3      			if(num<0)
+  80   3      				num = 59;
+  81   3      			while(s3==0)
+  82   3      				display(num);
+  83   3      		}
+  84   2      	}
+  85   1      
+  86   1      	if(s4==0)
+  87   1      	{
+  88   2      		delayms(10);
+  89   2      		if(s4==0)
+  90   2      		{
+  91   3      			num = 0;
+  92   3      			while(s4==0)
+  93   3      				display(num);
+  94   3      		}
+  95   2      	}
+  96   1      
+  97   1      	if(s5==0)
+  98   1      	{
+  99   2      		delayms(10);
+ 100   2      		if(s5==0)
+ 101   2      		{
+ 102   3      			TR0 = !TR0;
+ 103   3      			cnt = 0;
+ 104   3      			while(s5==0)
+ 105   3      				display(num);
+ 106   3      		}
+ 107   2      	}
+ 108   1      }
+ 109          
+ 110          void display(uint number)
+ 111          {
+ 112   1      	uint shi, ge;
+ 113   1      	shi = number / 10;
+ 114   1      	ge = number % 10;
+ 115   1      
+ 116   1      	itoa(number,string,10);
+*** WARNING C206 IN LINE 116 OF .\EINZEL.C: 'itoa': missing function-prototype
+C51 COMPILER V6.12  EINZEL                                                                 05/31/2017 17:43:47 PAGE 3   
+
+*** ERROR C267 IN LINE 116 OF .\EINZEL.C: 'itoa': requires ANSI-style prototype
+ 117   1      
+ 118   1      	Duanxuan = 1;
+ 119   1      	P0 = DigitronTable[shi];
+ 120   1      	Duanxuan = 0;
+ 121   1      	P0 = 0xff;
+ 122   1      	Weixuan = 1;
+ 123   1      	P0 = WeiTable[0];
+ 124   1      	Weixuan = 0;
+ 125   1      	delayms(5);
+ 126   1      
+ 127   1      	Duanxuan = 1;
+ 128   1      	P0 = DigitronTable[ge];
+ 129   1      	Duanxuan = 0;
+ 130   1      	P0 = 0xff;
+ 131   1      	Weixuan = 1;
+ 132   1      	P0 = WeiTable[1];
+ 133   1      	Weixuan = 0;
+ 134   1      	delayms(5);	
+ 135   1      }
+ 136          
+ 137          void delayms(uint xms)
+ 138          {
+ 139   1           unsigned int i, j;
+ 140   1           for (i=xms; i>0; i--)
+ 141   1                for (j=110; j>0; j--);
+ 142   1      }
+ 143          
+ 144          void T0_1s() interrupt 1
+ 145          {
+ 146   1      	TH0 = N_50ms / 256;
+ 147   1      	TL0 = N_50ms % 256;
+ 148   1      	cnt++;
+ 149   1      	if(cnt>=1000/50)
+ 150   1      	{
+ 151   2      		cnt = 0;
+ 152   2      		num++;
+ 153   2      		if(num>=60)
+ 154   2      			num = 0;
+ 155   2      	}
+ 156   1      }
+ 157          
+ 158          
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  1 ERROR(S)

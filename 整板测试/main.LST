@@ -1,0 +1,208 @@
+C51 COMPILER V9.00   MAIN                                                                  05/06/2015 09:33:40 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE main.c BROWSE INCDIR(D:\Keil_v5\C51\INC\STC) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <config.h>
+   2          /*
+   3          #define m_clear       0
+   4          #define m_LED         1
+   5          #define m_DA          2
+   6          #define m_AD          3 
+   7          #define m_DS18B20     4
+   8          #define m_KEY         5
+   9          #define m_24C02       6
+  10          #define m_1602        7
+  11          #define m_12864       8
+  12          */
+  13          void test_process();
+  14          void system_init()
+  15          {
+  16   1              csda=0;
+  17   1          dawr=0;
+  18   1              P0=0xff;
+  19   1              csda=1;
+  20   1          dawr=1;
+  21   1              P1 = 0xff;
+  22   1              diola = 1;
+  23   1              diola = 0;
+  24   1              P0 = 0xff;
+  25   1              dula = 1;
+  26   1              wela = 1;
+  27   1              dula = 0;
+  28   1              wela = 0;
+  29   1              dc_motor = 0;
+  30   1              relay = 0;
+  31   1              helm_motor = 0;
+  32   1              P1 &= 0xf0; 
+  33   1              IE = 0x90;
+  34   1      }
+  35          void main()
+  36          {                               
+  37   1              message=0;
+  38   1              system_init();
+  39   1              uart(); 
+  40   1              start();   
+  41   1              while(1)
+  42   1              {
+  43   2                      test_process();
+  44   2              }
+  45   1      }
+  46          void test_process()
+  47          {               
+  48   1                      switch(message)
+  49   1                      {
+  50   2                              case 27:
+  51   2                                              {
+  52   3                                                      start();
+  53   3                                                      break;  
+  54   3                                              }
+  55   2                              case '1':
+C51 COMPILER V9.00   MAIN                                                                  05/06/2015 09:33:40 PAGE 2   
+
+  56   2                                              {       
+  57   3                                                      send_string("LED检测，按RESET退出");
+  58   3                                                      led_main();
+  59   3                                                      start();
+  60   3                                                      break;  
+  61   3                                              }
+  62   2                              case '2':
+  63   2                                              {       
+  64   3                                                      send_string("DA检测，按RESET退出");
+  65   3                                                      da_main();
+  66   3                                                      start();
+  67   3                                                      break;  
+  68   3                                              }
+  69   2                              case '3':
+  70   2                                              {       
+  71   3                                                      send_string("AD检测，按RESET退出");
+  72   3                                                      ad_main();
+  73   3                                                      start();
+  74   3                                                      break;  
+  75   3                                              }       
+  76   2      
+  77   2                              case '4':
+  78   2                                              {       
+  79   3                                                      send_string("矩阵建盘检测，按RESET退出");
+  80   3                                                      key_main();
+  81   3                                                      start();
+  82   3                                                      break;
+  83   3                                              }
+  84   2      
+  85   2                              case '5':
+  86   2                                              {       
+  87   3                                                      send_string(" DS12B20检测，按RESET退出");
+  88   3                                                      ds18b20_main();
+  89   3                                                      start();
+  90   3                                                      break;
+  91   3                                              }
+  92   2                              case '6':
+  93   2                                              {       
+  94   3                                                      send_string("1602液晶检测，需将液晶插上并调节相应电位器，按RESET退出");
+  95   3                                                      tx1602_main();
+  96   3                                                      start();
+  97   3                                                      break;  
+  98   3                                              }
+  99   2                              case '7':
+ 100   2                                              {       
+ 101   3                                                      send_string(" 12864液晶检测，需将液晶插上并调节相应电位器，按RESET退出");
+ 102   3                                                      tx12864_main();
+ 103   3                                                      start();
+ 104   3                                                      break;
+ 105   3                                              }
+ 106   2                              case '8':
+ 107   2                                              {       
+ 108   3                                                      send_string(" AT24C02检测，按RESET退出");
+ 109   3                                                      at24c02_main();
+ 110   3                                                      start();
+ 111   3                                                      break;
+ 112   3                                              }
+ 113   2                              case '9':
+ 114   2                                              {       
+ 115   3                                                      send_string("点阵检测，需如下连接杜邦线:");
+ 116   3                                                      send_string("\n\r        P3.0 ----------> SCK\
+ 117   3                                                                               \n\r    P3.1 ----------> RCK\
+C51 COMPILER V9.00   MAIN                                                                  05/06/2015 09:33:40 PAGE 3   
+
+ 118   3                                                                               \n\r    P3.2 ----------> SDI");
+ 119   3                                                      send_string("\n\r按RESET退出");
+ 120   3                                                      dot_main();
+ 121   3                                                      start();
+ 122   3                                                      break;
+ 123   3                                              }
+ 124   2                              case 'a':
+ 125   2                                              {       
+ 126   3                                                      send_string("DS12C887检测，需接入1602液晶并如下连接杜邦线:");
+ 127   3      
+ 128   3                                                      send_string("\r\n             P1.4 ----------> CS\
+ 129   3                                                                               \r\n         P1.5 ----------> AS\
+ 130   3                                                                               \r\n         P1.6 ----------> WR\
+ 131   3                                                                               \r\n         P1.7 ----------> RD\
+ 132   3                                                                               \r\n    P0.0~P0.7 ----------> AD0~AD7");
+ 133   3                                                      send_string("\n\r按RESET退出"); 
+ 134   3                                                      ds12c887_main();
+ 135   3                                                      start();
+ 136   3                                                      break;
+ 137   3                                              }
+ 138   2                              case 'b':
+ 139   2                                              {
+ 140   3                                                      send_string("步进电机检测，需接入步进电机并如下连接杜邦线:");
+ 141   3                                                      send_string("\n\r             P3.3 ---------->  IO(红外)\
+ 142   3                                                                               \n\r    P1.0~P1.3 ---------->  INA~IND(步进电机)");
+ 143   3                                                      send_string("\n\r按RESET退出"); 
+ 144   3                                                      step_main();
+ 145   3                                                      start();
+ 146   3                                                      break;
+ 147   3                                              }
+ 148   2                              case 'c':
+ 149   2                                              {       
+ 150   3                                                      send_string("直流电机检测，需接入直流电机并如下连接杜邦线:");
+ 151   3                                                      send_string("\n\r        P2.2 ---------->  DC(直流电机)\
+ 152   3                                                                               \n\r    P3.3 ---------->  IO(红外)");
+ 153   3                                                      send_string("\n\r按RESET退出"); 
+ 154   3                                                      dc_main();
+ 155   3                                                      start();
+ 156   3                                                      break;
+ 157   3                                              }
+ 158   2                              case 'd':
+ 159   2                                              {       
+ 160   3                                                      send_string("舵机检测，需接入舵机并如下连接杜邦线:");
+ 161   3                                                      send_string("\n\r        P2.1 ---------->  SE(舵机)\
+ 162   3                                                                               \n\r    P3.3 ---------->  IO(红外)");
+ 163   3                                                      send_string("\n\r按RESET退出"); 
+ 164   3                                                      helm_main();
+ 165   3                                                      start();
+ 166   3                                                      break;
+ 167   3                                              }
+ 168   2                              case 'e':
+ 169   2                                              {       
+ 170   3                                                      send_string("继电器检测，需如下连接杜邦线:");
+ 171   3                                                      send_string("\n\r        P2.0 ---------->  RYIN(继电器)\
+ 172   3                                                                               \n\r    P3.3 ---------->  IO(红外)");
+ 173   3                                                      send_string("\n\r按RESET退出"); 
+ 174   3                                                      relay_main();
+ 175   3                                                      start();
+ 176   3                                                      break;
+ 177   3                                              }
+ 178   2                      }
+ 179   1      }
+C51 COMPILER V9.00   MAIN                                                                  05/06/2015 09:33:40 PAGE 4   
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    379    ----
+   CONSTANT SIZE    =   1091    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

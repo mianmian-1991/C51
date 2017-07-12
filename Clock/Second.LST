@@ -1,0 +1,136 @@
+C51 COMPILER V6.12  SECOND                                                                 05/21/2017 23:58:32 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE SECOND
+OBJECT MODULE PLACED IN .\Second.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\Second.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          
+   5          sbit led1 = P1^0;
+   6          sbit Weixuan = P2^7;
+   7          sbit Duanxuan = P2^6;
+   8          
+   9          uchar code DigitronTable[] =
+  10          {
+  11              0x3f, 0x06, 0x5b, 0x4f,
+  12              0x66, 0x6d, 0x7d, 0x07,
+  13              0x7f, 0x6f, 0x77, 0x7c,
+  14              0x39, 0x5e, 0x79, 0x71
+  15          };
+  16          
+  17          uchar code WeiTable[] =
+  18          {
+  19              0xfe, 0xfd, 0xfb, 0xf7, 0xef, 0xdf
+  20          };
+  21          
+  22          uint N_50ms = 65536-45872;
+  23          uint num_LED = 0;
+  24          uint num_Digitron = 0;
+  25          uint second, shi, ge;
+  26          
+  27          void delayms(uint);
+  28          void display(uint, uint);
+  29          
+  30          void main()
+  31          {
+  32   1      	TMOD = 0x11;	// T1 和 T0 均工作在方式 1
+  33   1      	TH1 = N_50ms / 256;		// T1 用作 LED，200 ms
+  34   1      	TL1 = N_50ms % 256;		
+  35   1      	TH0 = N_50ms / 256;		// T0 用作数码管，1s
+  36   1      	TL0 = N_50ms % 256;	
+  37   1      	EA = 1;
+  38   1      	ET1 = 1;
+  39   1      	ET0 = 1;
+  40   1      	TR1 = 1;
+  41   1      	TR0 = 1;
+  42   1      	while(1)
+  43   1      	{
+  44   2      		display(shi,ge);
+  45   2      	}
+  46   1      }
+  47          
+  48          
+  49          void LED_T1() interrupt 3
+  50          {
+  51   1      	TH1 = N_50ms / 256;
+  52   1      	TL1 = N_50ms % 256;
+  53   1      	num_LED++;
+  54   1      	if (num_LED >= 200/50)
+  55   1      	{
+C51 COMPILER V6.12  SECOND                                                                 05/21/2017 23:58:32 PAGE 2   
+
+  56   2      		num_LED = 0;
+  57   2      		led1 = ~led1;
+  58   2      	}	
+  59   1      }
+  60          
+  61          void Digitron_T0() interrupt 1
+  62          {
+  63   1      	TH0 = N_50ms / 256;
+  64   1      	TL0 = N_50ms % 256;
+  65   1      	num_Digitron++;
+  66   1      	if (num_Digitron >= 1000/50)
+  67   1      	{
+  68   2      		num_Digitron = 0;
+  69   2      		second++;
+  70   2      		if (second >= 60)
+  71   2      			second = 0;
+  72   2      		shi = second / 10;
+  73   2      		ge = second % 10;
+  74   2      	}
+  75   1      }
+  76          
+  77          void display(uint shi, uint ge)
+  78          {
+  79   1      	Duanxuan = 1;
+  80   1      	P0 = DigitronTable[shi];
+  81   1      	Duanxuan = 0;
+  82   1      	P0 = 0xff;
+  83   1      	Weixuan = 1;
+  84   1      	P0 = WeiTable[0];
+  85   1      	Weixuan = 0;
+  86   1      	delayms(5);
+  87   1      
+  88   1      	Duanxuan = 1;
+  89   1      	P0 = DigitronTable[ge];
+  90   1      	Duanxuan = 0;
+  91   1      	P0 = 0xff;
+  92   1      	Weixuan = 1;
+  93   1      	P0 = WeiTable[1];
+  94   1      	Weixuan = 0;
+  95   1      	delayms(5);	
+  96   1      }
+  97          
+  98          
+  99          
+ 100          void delayms(uint xms)   // 延时约 xms 毫秒（针对 uint）
+ 101          {
+ 102   1           unsigned int i, j;
+ 103   1           for (i=xms; i>0; i--)
+ 104   1                for (j=110; j>0; j--);
+ 105   1      }
+ 106          
+ 107          
+ 108          
+ 109          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    287    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     12       2
+C51 COMPILER V6.12  SECOND                                                                 05/21/2017 23:58:32 PAGE 3   
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

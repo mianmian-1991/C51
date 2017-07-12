@@ -1,0 +1,194 @@
+C51 COMPILER V9.00   DS18B20                                                               05/06/2015 09:33:41 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE DS18B20
+OBJECT MODULE PLACED IN ds18b20.OBJ
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ds18b20.c BROWSE INCDIR(D:\Keil_v5\C51\INC\STC) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <config.h>
+   2          #define uint unsigned int
+   3          #define uchar unsigned char
+   4          uint temp;                                              // variable of temperature
+   5          uchar flag1;                                            // sign of the result positive or negative
+   6          void delay_ds18b20(uint count)          //delay
+   7          {
+   8   1              uint i;
+   9   1              while(count)
+  10   1              {
+  11   2              i=200;
+  12   2              while(i>0)
+  13   2              i--;
+  14   2              count--;
+  15   2              }
+  16   1      }
+  17          ///////功能:串口初始化,波特率9600，方式1///////
+  18          void dsreset(void)                                      //send reset and initialization command
+  19          {
+  20   1              uint i;
+  21   1              DS=0;
+  22   1              i=103;
+  23   1              while(i>0)i--;
+  24   1              DS=1;
+  25   1              i=4;
+  26   1              while(i>0)i--;
+  27   1      }
+  28          
+  29          bit tmpreadbit(void)                                    //read a bit
+  30          {
+  31   1              uint i;
+  32   1              bit dat;
+  33   1              DS=0;i++;                                               //i++ for delay
+  34   1              DS=1;i++;i++;
+  35   1              dat=DS;
+  36   1              i=8;while(i>0)i--;
+  37   1              return (dat);
+  38   1      }
+  39          
+  40          uchar tmpread(void)                                     //read a byte date
+  41          {
+  42   1              uchar i,j,dat;
+  43   1              dat=0;
+  44   1              for(i=1;i<=8;i++)
+  45   1              {
+  46   2                  j=tmpreadbit();
+  47   2                  dat=(j<<7)|(dat>>1);                        //读出的数据最低位在最前面，这样刚好一个字节在DAT里
+  48   2              }
+  49   1              return(dat);
+  50   1      }
+  51          
+  52          void tmpwritebyte(uchar dat)                    //write a byte to ds18b20
+  53          {
+  54   1              uint i;
+  55   1              uchar j;
+C51 COMPILER V9.00   DS18B20                                                               05/06/2015 09:33:41 PAGE 2   
+
+  56   1              bit testb;
+  57   1              for(j=1;j<=8;j++)
+  58   1              {
+  59   2                  testb=dat&0x01;
+  60   2                  dat=dat>>1;
+  61   2                  if(testb)                                           //write 1
+  62   2              {
+  63   3                      DS=0;
+  64   3                      i++;i++;
+  65   3                      DS=1;
+  66   3                      i=8;while(i>0)i--;
+  67   3              }
+  68   2              else
+  69   2              {
+  70   3                      DS=0;                                   //write 0
+  71   3                      i=8;while(i>0)i--;
+  72   3                      DS=1;
+  73   3                      i++;i++;
+  74   3              }
+  75   2              }
+  76   1      }
+  77          
+  78          void tmpchange(void)                                    //DS18B20 begin change
+  79          {
+  80   1              dsreset();
+  81   1              delay_ds18b20(1);
+  82   1              tmpwritebyte(0xcc);                             // address all drivers on bus
+  83   1              tmpwritebyte(0x44);                             //  initiates a single temperature conversion
+  84   1      }
+  85          
+  86          uint tmp()                                              //get the temperature
+  87          {
+  88   1              float tt;
+  89   1              uchar a,b;
+  90   1              dsreset();
+  91   1              delay_ds18b20(1);
+  92   1              tmpwritebyte(0xcc);
+  93   1              tmpwritebyte(0xbe);
+  94   1              a=tmpread();
+  95   1              b=tmpread();
+  96   1              temp=b;
+  97   1              temp<<=8;                                       //two byte  compose a int variable
+  98   1              temp=temp|a;
+  99   1              tt=temp*0.0625;
+ 100   1              temp=tt*10+0.5;
+ 101   1              return temp;
+ 102   1      }
+ 103          
+ 104          void display_18b20(uint temp)                   //显示程序
+ 105          {       
+ 106   1              uchar A1,A2,A2t,A3,ser;
+ 107   1              ser=temp/10;
+ 108   1      //   SBUF=ser;
+ 109   1              A1=temp/100;
+ 110   1              A2t=temp%100;
+ 111   1              A2=A2t/10;
+ 112   1              A3=A2t%10;
+ 113   1      
+ 114   1              P0=0x00;
+ 115   1              dula=0;
+ 116   1              P0=seg_table[A1];                                       //显示百位
+ 117   1              dula=1;
+C51 COMPILER V9.00   DS18B20                                                               05/06/2015 09:33:41 PAGE 3   
+
+ 118   1              dula=0;
+ 119   1              P0=0xff;
+ 120   1              wela=0;
+ 121   1              P0=0x7e;
+ 122   1              wela=1;
+ 123   1              wela=0;
+ 124   1              delay_ds18b20(2);
+ 125   1      
+ 126   1              P0=0x00;
+ 127   1              dula=0;
+ 128   1              P0=seg_table[A2]|0x80;                                  //显示十位
+ 129   1              dula=1;
+ 130   1              dula=0;
+ 131   1              P0=0xff;
+ 132   1              wela=0;
+ 133   1              P0=0x7d;
+ 134   1              wela=1;
+ 135   1              wela=0;
+ 136   1              delay_ds18b20(2);
+ 137   1      
+ 138   1              P0=0x00;
+ 139   1              dula=0;
+ 140   1              P0=seg_table[A3];                                       //显示个位
+ 141   1              dula=1;
+ 142   1              dula=0;
+ 143   1              P0=0xff;
+ 144   1              wela=0;
+ 145   1              P0=0x7b;
+ 146   1              wela=1;
+ 147   1              wela=0;
+ 148   1              delay_ds18b20(2);
+ 149   1      }
+ 150          
+ 151          void ds18b20_main()
+ 152          {
+ 153   1              system_init();
+ 154   1              while(message=='5')
+ 155   1              {
+ 156   2                      //uchar a,c;
+ 157   2                      //for(c=0;c<20;c++)
+ 158   2                      //{
+ 159   2                      tmpchange();
+ 160   2                              //for(a=10;a>0;a--)
+ 161   2                      //{
+ 162   2                                      display_18b20(tmp());
+ 163   2                      //5}
+ 164   2                      //}
+ 165   2              }   
+ 166   1      }
+ 167          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    477    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       2
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

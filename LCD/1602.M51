@@ -1,0 +1,281 @@
+BL51 BANKED LINKER/LOCATER V4.13                                                        05/26/2017  22:51:36  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.13, INVOKED BY:
+D:\[SOFTWARE]\KEIL\C51\BIN\BL51.EXE 1602.obj TO 1602 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  1602.obj (1602)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  1602 (1602)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0002H     UNIT         ?DT?1602
+                    000AH     0016H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         _BIT_GROUP_
+                    0020H.1   0000H.7                *** GAP ***
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     00D9H     UNIT         ?PR?MAIN?1602
+            CODE    00DCH     0026H     UNIT         ?PR?_DELAY?1602
+            CODE    0102H     0022H     UNIT         ?PR?INIT?1602
+            CODE    0124H     0022H     UNIT         ?CO?1602
+            CODE    0146H     0014H     UNIT         ?PR?_WRITE?1602
+            CODE    015AH     000DH     UNIT         ?PR?_WRITE_COM?1602
+            CODE    0167H     000DH     UNIT         ?PR?_WRITE_DATA?1602
+            CODE    0174H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   1602 (1602)
+
+
+SEGMENT                           BIT_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?1602
+
+?PR?MAIN?1602                  -----    -----
+  +--> ?PR?INIT?1602
+  +--> ?PR?_WRITE?1602
+  +--> ?CO?1602
+  +--> ?PR?_DELAY?1602
+
+?PR?INIT?1602                  -----    -----
+  +--> ?PR?_WRITE?1602
+
+?PR?_WRITE?1602                0020H.0  0000H.1
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/26/2017  22:51:36  PAGE 2
+
+
+  +--> ?PR?_DELAY?1602
+
+
+
+SYMBOL TABLE OF MODULE:  1602 (1602)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        1602
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  B:00B0H.5       PUBLIC        T1
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  C:0167H         PUBLIC        _write_data
+  C:0124H         PUBLIC        row1
+  C:012EH         PUBLIC        row2
+  C:0137H         PUBLIC        row3
+  C:0146H         PUBLIC        _write
+  D:00A8H         PUBLIC        IE
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  B:00B8H.4       PUBLIC        PS
+  B:0090H.1       PUBLIC        T2EX
+  B:00D0H.2       PUBLIC        OV
+  C:0003H         PUBLIC        main
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  B:00C8H.5       PUBLIC        RCLK
+  C:015AH         PUBLIC        _write_com
+  B:00C8H.4       PUBLIC        TCLK
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0102H         PUBLIC        init
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  B:00C8H.0       PUBLIC        CP_RL2
+  D:0008H         PUBLIC        cnt
+  B:00A0H.6       PUBLIC        Duanxuan
+  B:00A8H.1       PUBLIC        ET0
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/26/2017  22:51:36  PAGE 3
+
+
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  B:0098H.7       PUBLIC        SM0
+  B:0098H.6       PUBLIC        SM1
+  B:0098H.5       PUBLIC        SM2
+  B:00B8H.1       PUBLIC        PT0
+  B:00B8H.3       PUBLIC        PT1
+  B:00D0H.3       PUBLIC        RS0
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  B:00B0H.5       PUBLIC        LCD_RS
+  B:00B8H.2       PUBLIC        PX1
+  B:00C8H.3       PUBLIC        EXEN2
+  B:00A0H.7       PUBLIC        Weixuan
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  B:00B0H.0       PUBLIC        RXD
+  B:00B0H.1       PUBLIC        TXD
+  C:00E2H         PUBLIC        _delay
+  B:00D0H.5       PUBLIC        F0
+  B:00B0H.4       PUBLIC        LCD_E
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:0003H         LINE#         57
+  C:0003H         LINE#         58
+  C:0003H         LINE#         59
+  C:0006H         LINE#         63
+  C:000DH         LINE#         64
+  C:0012H         LINE#         65
+  C:001BH         LINE#         66
+  C:001BH         LINE#         67
+  C:0020H         LINE#         68
+  C:0027H         LINE#         69
+  C:002EH         LINE#         70
+  C:0036H         LINE#         71
+  C:0038H         LINE#         73
+  C:003FH         LINE#         74
+  C:0044H         LINE#         75
+  C:0044H         LINE#         76
+  C:0050H         LINE#         77
+  C:0057H         LINE#         78
+  C:0068H         LINE#         80
+  C:006FH         LINE#         81
+  C:0074H         LINE#         82
+  C:007DH         LINE#         83
+  C:007DH         LINE#         84
+  C:0082H         LINE#         85
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/26/2017  22:51:36  PAGE 4
+
+
+  C:0085H         LINE#         86
+  C:008DH         LINE#         87
+  C:008FH         LINE#         89
+  C:0096H         LINE#         90
+  C:009BH         LINE#         91
+  C:00A4H         LINE#         92
+  C:00A4H         LINE#         93
+  C:00A9H         LINE#         94
+  C:00ACH         LINE#         95
+  C:00B4H         LINE#         96
+  C:00B6H         LINE#         98
+  C:00BBH         LINE#         99
+  C:00BBH         LINE#         100
+  C:00C2H         LINE#         101
+  C:00C9H         LINE#         102
+  C:00DAH         LINE#         104
+  -------         ENDPROC       MAIN
+  -------         PROC          INIT
+  C:0102H         LINE#         107
+  C:0102H         LINE#         108
+  C:0102H         LINE#         109
+  C:0104H         LINE#         110
+  C:0106H         LINE#         111
+  C:0108H         LINE#         112
+  C:010FH         LINE#         113
+  C:0116H         LINE#         114
+  C:011DH         LINE#         115
+  -------         ENDPROC       INIT
+  -------         PROC          _WRITE
+  D:0007H         SYMBOL        com_data
+  B:0020H.0       SYMBOL        comORdata
+  C:0146H         LINE#         118
+  C:0146H         LINE#         119
+  C:0146H         LINE#         120
+  C:0149H         LINE#         121
+  C:014DH         LINE#         123
+  C:014FH         LINE#         124
+  C:014FH         LINE#         125
+  C:0152H         LINE#         126
+  C:0154H         LINE#         127
+  C:0157H         LINE#         128
+  C:0159H         LINE#         129
+  -------         ENDPROC       _WRITE
+  -------         PROC          _WRITE_COM
+  D:0007H         SYMBOL        coms
+  C:015AH         LINE#         131
+  C:015AH         LINE#         132
+  C:015AH         LINE#         133
+  C:015CH         LINE#         134
+  C:015CH         LINE#         135
+  C:015FH         LINE#         136
+  C:0161H         LINE#         137
+  C:0164H         LINE#         138
+  C:0166H         LINE#         139
+  -------         ENDPROC       _WRITE_COM
+  -------         PROC          _WRITE_DATA
+  D:0007H         SYMBOL        datas
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/26/2017  22:51:36  PAGE 5
+
+
+  C:0167H         LINE#         141
+  C:0167H         LINE#         142
+  C:0167H         LINE#         143
+  C:0169H         LINE#         144
+  C:0169H         LINE#         145
+  C:016CH         LINE#         146
+  C:016EH         LINE#         147
+  C:0171H         LINE#         148
+  C:0173H         LINE#         149
+  -------         ENDPROC       _WRITE_DATA
+  C:00DCH         SYMBOL        L?0037
+  C:00DEH         SYMBOL        L?0038
+  -------         PROC          L?0036
+  -------         ENDPROC       L?0036
+  C:00DCH         SYMBOL        L?0037
+  C:00DEH         SYMBOL        L?0038
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        x
+  -------         DO            x
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         j
+  C:00E2H         LINE#         151
+  C:00E2H         LINE#         152
+  C:00E2H         LINE#         154
+  C:00ECH         LINE#         155
+  C:0101H         LINE#         156
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        1602
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_WRITE_COM?1602
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_WRITE_DATA?1602
+
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)

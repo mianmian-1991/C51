@@ -1,0 +1,233 @@
+C51 COMPILER V6.12  DC_INFRARED                                                            06/09/2017 19:48:08 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE DC_INFRARED
+OBJECT MODULE PLACED IN .\DC_Infrared.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\DC_Infrared.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          
+   3          #define uchar unsigned char 
+   4          
+   5          #define Imax  14000               // ´Ë´¦Îª¾§ÕñÎª11.0592Ê±µÄÈ¡Öµ, 
+   6          #define Imin  8000                // ÈçÓÃÆäËüÆµÂÊµÄ¾§ÕñÊ±,
+   7          #define Inum1 1450                // Òª¸Ä±äÏàÓ¦µÄÈ¡Öµ¡£
+   8          #define Inum2 700 
+   9          #define Inum3 3000 
+  10          
+  11          sbit Duanxuan = P2^6;        
+  12          sbit Weixuan = P2^7;
+  13          sbit pwm = P1^7 ;                 // PWMÐÅºÅÊä³ö
+  14          
+  15          uchar code table[] = {0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,
+  16                                0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71}; //ÊýÂë¹Ü¶ÎÂë
+  17          
+  18          uchar Im[4] = {0x00,0x00,0x00,0x00};	// Ò£¿ØÆ÷È¡Âë±£´æÓÚ Im[2]
+  19          
+  20          uchar f;	// Ò£¿ØÆ÷ÆôÊ¼Âë±êÖ¾
+  21          uchar IrOK;		// Ò£¿ØÆ÷È¡Âë³É¹¦±êÖ¾
+  22          uchar PulseWidth = 0;             // Âö¿íÖµ
+  23          uchar StartFlag = 0;              // Æô¶¯/Í£Ö¹ ±êÖ¾Î»£º0 Í£Ö¹£¬1 Æô¶¯
+  24          uchar count;                      // 0.5ms ´ÎÊý±êÊ¶
+  25          unsigned long m,Tc;		// m È¡ÂëÊ±¶¨Î»ÊýÓÃ£¬Tc ÊÇ INT1 ÖÐ¶ÏÊ± T0 Ê±³¤£¬ÊÇÈ·¶¨ÂëÖµµÄÐÅºÅ
+  26          
+  27          void init();
+  28          void delay(uchar);
+  29          void display();
+  30          void Inf_Dispose();
+  31          
+  32          void main(void)
+  33          { 
+  34   1      	init();
+  35   1      
+  36   1      	while(1)
+  37   1      	{
+  38   2      	    Inf_Dispose();            //ºìÍâ½ÓÊÕ´¦Àí
+  39   2              display();                //ÊýÂë¹ÜÏÔÊ¾
+  40   2          }
+  41   1      }
+  42          
+  43          void init()
+  44          {
+  45   1      	m = 0;
+  46   1          f = 0;    
+  47   1          PulseWidth = 0;
+  48   1          count = 0; 
+  49   1          pwm = 0;
+  50   1      
+  51   1      	EA = 1;		// ×ÜÖÐ¶ÏÔÊÐí
+  52   1      	
+  53   1      	IT1 = 1;	// INT1 ÏÂ½µÑØÓÐÐ§
+  54   1          EX1 = 1;	// INT1 ÖÐ¶ÏÔÊÐí
+  55   1      	
+C51 COMPILER V6.12  DC_INFRARED                                                            06/09/2017 19:48:08 PAGE 2   
+
+  56   1      	TMOD = 0x11;   // T1 ºÍ T0 ¾ùÎª·½Ê½ 1£¬²»¹ý¼ÈÈ»¿ªÁË T1£¬ÎªÊ²Ã´»ñÈ¡¼üÂëºÍ PWM Âö¿í¼ÆÊ±¶¼ÊÇÓÃ T0£¬ºÃÏñ»á³åÍ
+             -»
+  57   1      	TH0  = 0x00;
+  58   1      	TL0  = 0x00;
+  59   1      	TH1  = 0xfe;
+  60   1      	TL1  = 0x33;	//11.0592MZ¾§Õñ£¬0.5ms
+  61   1      	ET1 = 1;
+  62   1          ET0 = 0;
+  63   1      		             
+  64   1          TR0 = 1;
+  65   1      	TR1 = 1;
+  66   1      }
+  67          
+  68          void delay(uchar i)
+  69          {
+  70   1          uchar j,k; 
+  71   1      
+  72   1          for(j = i;j > 0;j--)
+  73   1          {
+  74   2              for(k = 110;k > 0;k--);
+  75   2          }  
+  76   1      }
+  77          
+  78          void display(void)
+  79          { 
+  80   1          Duanxuan = 0;
+  81   1          P0 = table[PulseWidth/10];             //ÏÔÊ¾Âö¿íÖµ¸ßÎ»
+  82   1          Duanxuan = 1;
+  83   1          Duanxuan = 0;
+  84   1      
+  85   1          Weixuan = 0;
+  86   1          P0 = 0xfe;
+  87   1          Weixuan = 1;
+  88   1          Weixuan = 0;
+  89   1          delay(5);
+  90   1      }
+  91          
+  92          void intersvr1(void) interrupt 2 using 1	// INT1 ÖÐ¶Ï³ÌÐò
+  93          {
+  94   1      	Tc = TH0 * 256 + TL0;                      // ÌáÈ¡ INT1 ÖÐ¶ÏÊ± T0 Ê±³¤
+  95   1      	TH0 = 0; 
+  96   1          TL0 = 0;                                   // T0 ÖØÐÂ¼ÆÊ±
+  97   1      
+  98   1      	if((Tc > Imin) && (Tc < Imax))				// Tc ÔÚ Imin ºÍ Imax Ö®¼ä£¬ËµÃ÷ÕÒµ½Ò£¿ØÆ÷¿ªÊ¼ÓÐÂë´«Èë
+  99   1          { 
+ 100   2      		m = 0;
+ 101   2              f = 1;		// ÆôÊ¼±êÖ¾
+ 102   2      		return;
+ 103   2          }
+ 104   1      
+ 105   1          if(f == 1)	
+ 106   1          {
+ 107   2      		// Ã¿´ÎÖÐ¶ÏÓÒÒÆÒ»Î»£¬Èç¹û Tc>Inum1 ×î¸ßÎ»¾Í¼ÓÒ»Î» 1 ½øÀ´£¬¹²È¡ËÄ¸ö×Ö½Úµ½ Im[0]~Im[3] ÖÐ
+ 108   2      		// Ö»ÓÐ Im[2] ´æµÄÊÇ¼üÂëÖµ£¬Im[3] ÊÇÆä·´Âë£¬ÓÃÀ´Ð£Ñé
+ 109   2              if(Tc > Inum1 && Tc < Inum3)	// Inum1 < Tc < Inum3 
+ 110   2      	  	{
+ 111   3      			Im[m / 8] = Im[m / 8] >> 1 | 0x80;
+ 112   3                  m++; 
+ 113   3           	}
+ 114   2          	if(Tc > Inum2 && Tc < Inum1) 	// Inum2 < Tc < Inum1
+ 115   2              {
+ 116   3              	Im[m / 8] = Im[m / 8] >> 1; 	
+C51 COMPILER V6.12  DC_INFRARED                                                            06/09/2017 19:48:08 PAGE 3   
+
+ 117   3                  m++;                   
+ 118   3      		}
+ 119   2      
+ 120   2      		if(m == 32)		// ËÄ¸ö×Ö½ÚÈ¡ÍêÁË 
+ 121   2      	 	{
+ 122   3                  m = 0;  
+ 123   3                  f = 0;
+ 124   3             	    if(Im[2] ==~ Im[3]) 	// ¶þÕß°´Î»·´£¬ËµÃ÷¶ÁÂëÕýÈ·
+ 125   3      	        {
+ 126   4                      IrOK =1 ;
+ 127   4      		    }
+ 128   3                  else 
+ 129   3                  {
+ 130   4                      IrOK = 0;   // È¡ÂëÍê³ÉºóÅÐ¶Ï¶ÁÂëÊÇ·ñÕýÈ·
+ 131   4                  }
+ 132   3      	    }
+ 133   2      	}	
+ 134   1      }
+ 135          
+ 136          void Inf_Dispose(void)
+ 137          {
+ 138   1          if(IrOK == 1) 
+ 139   1          { 
+ 140   2              switch(Im[2])   
+ 141   2              {
+ 142   3                  case 0x44:                   // 0100 0100 Ò£¿ØÆ÷ ¿ªÊ¼/Í£Ö¹ ¼ü°´ÏÂ Æô¶¯Í£Ö¹¿ØÖÆ
+ 143   3                      StartFlag =~ StartFlag;		// ¿ªÊ¼/Í£Ö¹ ×´Ì¬ÇÐ»»
+ 144   3                      if(StartFlag)            // ÇÐ»»µ½¿ªÊ¼
+ 145   3                      {
+ 146   4                          if(PulseWidth)       // ×¢Òâµ±Âö¿íÖµ²»Îª 0 Ê±²Å¿ÉÒÔÆô¶¯
+ 147   4                          {
+ 148   5                              ET0 = 1;	// T0 ÖÐ¶ÏÔÊÐí
+ 149   5                          }
+ 150   4                      }
+ 151   3                      else                     //Í£Ö¹
+ 152   3                      {
+ 153   4                          ET0 = 0;	// T0 ÖÐ¶Ï¹Ø±Õ
+ 154   4                          pwm = 0;	// PWM Ê¼ÖÕµÍµçÆ½
+ 155   4                      }
+ 156   3                  	break;
+ 157   3      
+ 158   3                  case 0x09:                   // 0000 1001 Ò£¿ØÆ÷ - ¼ü°´ÏÂ Âö¿íÖµ¼Ó10
+ 159   3                      PulseWidth += 10;                   
+ 160   3                      count=0;                 
+ 161   3                      if(PulseWidth==60)              
+ 162   3                      {
+ 163   4                          PulseWidth = 50;        // ×î´ó 50        
+ 164   4                      }
+ 165   3                  break;
+ 166   3      
+ 167   3                  case 0x15:                   // 0001 0101 Ò£¿ØÆ÷ + ¼ü°´ÏÂ Âö¿íÖµ¼õ10
+ 168   3                      PulseWidth -= 10;                   
+ 169   3                      count=0;
+ 170   3                      if(PulseWidth == 0)
+ 171   3                      {
+ 172   4                          PulseWidth = 10;        // ×îÐ¡ 10    
+ 173   4                      } 
+ 174   3                      if(PulseWidth == 246)
+ 175   3                      {
+ 176   4                          PulseWidth = 0;
+ 177   4                      }               
+ 178   3                  break;
+C51 COMPILER V6.12  DC_INFRARED                                                            06/09/2017 19:48:08 PAGE 4   
+
+ 179   3      
+ 180   3                  default:
+ 181   3                  break;
+ 182   3              }
+ 183   2              IrOK = 0;	   
+ 184   2      	}
+ 185   1      }
+ 186          
+ 187          void Time1() interrupt 3        // T1 ÖÐ¶Ï³ÌÐò
+ 188          {
+ 189   1      	TH1  = 0xfe;                    // ÖØ×°³õÖµ
+ 190   1      	TL1  = 0x33;
+ 191   1          
+ 192   1          count++;		// ÏÈÊä³ö¸ßµçÆ½£¬Í¬Ê±¼ÆÊý
+ 193   1          if(count == PulseWidth)         // µ½´ïÂö¿íÖµ£¬¿ªÊ¼Êä³öµÍµçÆ½                
+ 194   1          {
+ 195   2              pwm = 0;
+ 196   2          }
+ 197   1      
+ 198   1          if(count == 60)	//	30ms ÖÜÆÚ
+ 199   1          {
+ 200   2              pwm = 1;                    // ÏÂÒ»¸öÖÜÆÚ¿ªÊ¼Êä³ö¸ßµçÆ½
+ 201   2              count = 0;
+ 202   2          }   
+ 203   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    557    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     17    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

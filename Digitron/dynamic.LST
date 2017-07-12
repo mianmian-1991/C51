@@ -1,0 +1,77 @@
+C51 COMPILER V6.12  DYNAMIC                                                                05/21/2017 18:32:56 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE DYNAMIC
+OBJECT MODULE PLACED IN .\dynamic.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\dynamic.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          sbit WeiXuan = P2^7;
+   7          sbit DuanXuan = P2^6;
+   8          
+   9          uchar code DigitronTable[] = 
+  10          {
+  11          	0x3f, 0x06, 0x5b, 0x4f, 
+  12          	0x66, 0x6d, 0x7d, 0x07,
+  13          	0x7f, 0x6f, 0x77, 0x7c,
+  14          	0x39, 0x5e, 0x79, 0x71
+  15          };
+  16          
+  17          uchar code WeiTable[] =
+  18          {
+  19          	0xfe, 0xfd, 0xfb, 0xf7, 0xef, 0xdf
+  20          };
+  21          
+  22          void delayms(uint);
+  23          
+  24          void main()
+  25          {
+  26   1      	uint num = 0;
+  27   1      
+  28   1      	while(1)
+  29   1      	{
+  30   2      		for (num=0;num<6;num++)
+  31   2      		{
+  32   3      			DuanXuan = 1;
+  33   3      			P0 = DigitronTable[num*2];
+  34   3      			DuanXuan = 0;
+  35   3      
+  36   3      			P0 = 0xff;   // ÏûÓ°
+  37   3      
+  38   3      			WeiXuan = 1;
+  39   3      			P0 = WeiTable[num];
+  40   3      			WeiXuan = 0;
+  41   3      
+  42   3      			delayms(3);
+  43   3      		}
+  44   2      	}
+  45   1      }
+  46          
+  47          void delayms(uint xms)
+  48          {
+  49   1      	uint i,j;
+  50   1      	for(i=xms;i>0;i--)
+  51   1      		for(j=110;j>0;j--);
+  52   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V6.12  DYNAMIC                                                                05/21/2017 18:32:56 PAGE 2   
+
+   CODE SIZE        =    108    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

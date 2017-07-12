@@ -1,0 +1,267 @@
+BL51 BANKED LINKER/LOCATER V4.13                                                        06/07/2017  17:38:41  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.13, INVOKED BY:
+D:\[SOFTWARE]\KEIL\C51\BIN\BL51.EXE DC_Key.obj TO DC_Motor RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  DC_Key.obj (DC_KEY)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  DC_Motor (DC_KEY)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         ?DT?DC_KEY
+            DATA    000CH     0001H     UNIT         _DATA_GROUP_
+            IDATA   000DH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     003DH     UNIT         ?PR?SCAN_KEY?DC_KEY
+            CODE    00CCH     0035H     UNIT         ?PR?PWM_DRIVE?DC_KEY
+            CODE    0101H     0020H     UNIT         ?PR?_DELAY?DC_KEY
+            CODE    0121H     001FH     UNIT         ?PR?INIT?DC_KEY
+            CODE    0140H     0016H     UNIT         ?CO?DC_KEY
+            CODE    0156H     0012H     UNIT         ?PR?_DISPLAY?DC_KEY
+            CODE    0168H     000BH     UNIT         ?PR?MAIN?DC_KEY
+            CODE    0173H     000AH     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   DC_Motor (DC_KEY)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?DC_KEY
+  +--> ?C_INITSEG
+
+?PR?MAIN?DC_KEY                -----    -----
+  +--> ?PR?INIT?DC_KEY
+  +--> ?PR?SCAN_KEY?DC_KEY
+  +--> ?PR?PWM_DRIVE?DC_KEY
+
+?PR?INIT?DC_KEY                -----    -----
+  +--> ?CO?DC_KEY
+
+?PR?SCAN_KEY?DC_KEY            -----    -----
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/07/2017  17:38:41  PAGE 2
+
+
+  +--> ?PR?_DELAY?DC_KEY
+
+?PR?PWM_DRIVE?DC_KEY           000CH    0001H
+  +--> ?PR?_DISPLAY?DC_KEY
+
+?PR?_DISPLAY?DC_KEY            -----    -----
+  +--> ?CO?DC_KEY
+  +--> ?PR?_DELAY?DC_KEY
+
+
+
+SYMBOL TABLE OF MODULE:  DC_Motor (DC_KEY)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        DC_KEY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  B:00B0H.5       PUBLIC        T1
+  D:0008H         PUBLIC        low_num
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  B:0090H.7       PUBLIC        DC
+  D:00A8H         PUBLIC        IE
+  C:0150H         PUBLIC        WeiTable
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  B:00B8H.4       PUBLIC        PS
+  B:0090H.1       PUBLIC        T2EX
+  B:00D0H.2       PUBLIC        OV
+  C:0168H         PUBLIC        main
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  B:00C8H.5       PUBLIC        RCLK
+  B:00B0H.5       PUBLIC        speed_down
+  B:00C8H.4       PUBLIC        TCLK
+  C:0140H         PUBLIC        DigitronTable
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0121H         PUBLIC        init
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  B:00C8H.0       PUBLIC        CP_RL2
+  B:00A0H.6       PUBLIC        Duanxuan
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/07/2017  17:38:41  PAGE 3
+
+
+  B:00A8H.1       PUBLIC        ET0
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  B:0098H.7       PUBLIC        SM0
+  D:0009H         PUBLIC        num
+  B:0098H.6       PUBLIC        SM1
+  C:008FH         PUBLIC        scan_key
+  B:0098H.5       PUBLIC        SM2
+  D:000AH         PUBLIC        high_num
+  B:00B8H.1       PUBLIC        PT0
+  B:00B8H.3       PUBLIC        PT1
+  B:00D0H.3       PUBLIC        RS0
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  B:00B8H.2       PUBLIC        PX1
+  C:0156H         PUBLIC        _display
+  B:00B0H.4       PUBLIC        speed_up
+  B:00C8H.3       PUBLIC        EXEN2
+  B:00A0H.7       PUBLIC        Weixuan
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  B:00B0H.0       PUBLIC        RXD
+  B:00B0H.1       PUBLIC        TXD
+  C:0101H         PUBLIC        _delay
+  C:00CCH         PUBLIC        PWM_drive
+  B:00D0H.5       PUBLIC        F0
+  D:000BH         PUBLIC        max_num
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:0168H         LINE#         37
+  C:0168H         LINE#         38
+  C:0168H         LINE#         39
+  C:016BH         LINE#         40
+  C:016BH         LINE#         41
+  C:016BH         LINE#         42
+  C:016EH         LINE#         43
+  C:0171H         LINE#         44
+  -------         ENDPROC       MAIN
+  -------         PROC          INIT
+  C:0121H         LINE#         47
+  C:0121H         LINE#         48
+  C:0121H         LINE#         49
+  C:0123H         LINE#         51
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/07/2017  17:38:41  PAGE 4
+
+
+  C:0126H         LINE#         53
+  C:0128H         LINE#         54
+  C:012FH         LINE#         55
+  C:0131H         LINE#         57
+  C:0134H         LINE#         59
+  C:0136H         LINE#         60
+  C:013DH         LINE#         61
+  C:013FH         LINE#         62
+  -------         ENDPROC       INIT
+  -------         PROC          SCAN_KEY
+  C:008FH         LINE#         64
+  C:008FH         LINE#         65
+  C:008FH         LINE#         66
+  C:0092H         LINE#         67
+  C:0092H         LINE#         68
+  C:0099H         LINE#         69
+  C:009CH         LINE#         70
+  C:009CH         LINE#         71
+  C:009EH         LINE#         72
+  C:00A7H         LINE#         73
+  C:00AAH         LINE#         74
+  C:00ADH         LINE#         75
+  C:00ADH         LINE#         76
+  C:00ADH         LINE#         77
+  C:00B0H         LINE#         78
+  C:00B0H         LINE#         79
+  C:00B7H         LINE#         80
+  C:00BAH         LINE#         81
+  C:00BAH         LINE#         82
+  C:00BCH         LINE#         83
+  C:00C5H         LINE#         84
+  C:00C8H         LINE#         85
+  C:00CBH         LINE#         86
+  C:00CBH         LINE#         87
+  C:00CBH         LINE#         88
+  -------         ENDPROC       SCAN_KEY
+  -------         PROC          PWM_DRIVE
+  -------         DO            PWM_DRIVE
+  D:000CH         SYMBOL        i
+  -------         ENDDO         i
+  C:00CCH         LINE#         90
+  C:00CCH         LINE#         91
+  C:00CCH         LINE#         94
+  C:00CFH         LINE#         95
+  C:00D6H         LINE#         97
+  C:00E0H         LINE#         98
+  C:00E0H         LINE#         99
+  C:00E2H         LINE#         100
+  C:00E7H         LINE#         101
+  C:00EBH         LINE#         103
+  C:00F5H         LINE#         104
+  C:00F5H         LINE#         105
+  C:00F7H         LINE#         106
+  C:00FCH         LINE#         107
+  C:0100H         LINE#         108
+  -------         ENDPROC       PWM_DRIVE
+  -------         PROC          _DISPLAY
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/07/2017  17:38:41  PAGE 5
+
+
+  D:0007H         SYMBOL        num
+  C:0156H         LINE#         110
+  C:0156H         LINE#         111
+  C:0156H         LINE#         112
+  C:0158H         LINE#         113
+  C:015FH         LINE#         114
+  C:0161H         LINE#         116
+  -------         ENDPROC       _DISPLAY
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        x
+  -------         DO            x
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         j
+  C:0101H         LINE#         119
+  C:0101H         LINE#         120
+  C:0101H         LINE#         122
+  C:010BH         LINE#         123
+  C:0120H         LINE#         124
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        DC_KEY
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

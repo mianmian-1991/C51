@@ -1,0 +1,286 @@
+BL51 BANKED LINKER/LOCATER V4.13                                                        05/29/2017  21:55:48  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.13, INVOKED BY:
+D:\[SOFTWARE]\KEIL\C51\BIN\BL51.EXE 12864_parallel.obj TO 12864_parallel RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  12864_parallel.obj (12864_PARALLEL)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (STRCAT)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C?CSTPTR)
+
+
+LINK MAP OF MODULE:  12864_parallel (12864_PARALLEL)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000DH     UNIT         _DATA_GROUP_
+                    0015H     000BH                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         _BIT_GROUP_
+                    0020H.1   0000H.7                *** GAP ***
+            DATA    0021H     0048H     UNIT         ?DT?12864_PARALLEL
+            IDATA   0069H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     0065H     UNIT         ?PR?MAIN?12864_PARALLEL
+            CODE    00F4H     0058H     UNIT         ?PR?_STRCAT?STRCAT
+            CODE    014CH     004EH     UNIT         ?C_INITSEG
+            CODE    019AH     002BH     UNIT         ?PR?_POSITION?12864_PARALLEL
+            CODE    01C5H     002BH     UNIT         ?C?LIB_CODE
+            CODE    01F0H     0024H     UNIT         ?PR?INIT?12864_PARALLEL
+            CODE    0214H     0024H     UNIT         ?PR?_DELAY?12864_PARALLEL
+            CODE    0238H     001AH     UNIT         ?PR?_WRITE?12864_PARALLEL
+
+
+
+OVERLAY MAP OF MODULE:   12864_parallel (12864_PARALLEL)
+
+
+SEGMENT                                 BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT                START    LENGTH     START    LENGTH
+------------------------------------------------------------------------
+?C_C51STARTUP                        -----    -----      -----    -----
+  +--> ?PR?MAIN?12864_PARALLEL
+  +--> ?C_INITSEG
+
+?PR?MAIN?12864_PARALLEL              -----    -----      0008H    0004H
+  +--> ?PR?INIT?12864_PARALLEL
+  +--> ?PR?_STRCAT?STRCAT
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/29/2017  21:55:48  PAGE 2
+
+
+  +--> ?PR?_POSITION?12864_PARALLEL
+  +--> ?PR?_WRITE?12864_PARALLEL
+  +--> ?PR?_DELAY?12864_PARALLEL
+
+?PR?INIT?12864_PARALLEL              -----    -----      -----    -----
+  +--> ?PR?_WRITE?12864_PARALLEL
+  +--> ?PR?_DELAY?12864_PARALLEL
+
+?PR?_WRITE?12864_PARALLEL            0020H.0  0000H.1    -----    -----
+  +--> ?PR?_DELAY?12864_PARALLEL
+
+?PR?_STRCAT?STRCAT                   -----    -----      000CH    0009H
+
+?PR?_POSITION?12864_PARALLEL         -----    -----      000CH    0001H
+  +--> ?PR?_WRITE?12864_PARALLEL
+
+
+
+SYMBOL TABLE OF MODULE:  12864_parallel (12864_PARALLEL)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        12864_PARALLEL
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  B:00B0H.5       PUBLIC        T1
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  C:0238H         PUBLIC        _write
+  D:00A8H         PUBLIC        IE
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  D:0021H         PUBLIC        emoji
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:00B0H.7       PUBLIC        LCD_PSB
+  B:0098H.0       PUBLIC        RI
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  B:00B8H.4       PUBLIC        PS
+  B:0090H.1       PUBLIC        T2EX
+  B:00D0H.2       PUBLIC        OV
+  C:008FH         PUBLIC        main
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  B:00C8H.5       PUBLIC        RCLK
+  B:00C8H.4       PUBLIC        TCLK
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/29/2017  21:55:48  PAGE 3
+
+
+  C:01F0H         PUBLIC        init
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  B:00C8H.0       PUBLIC        CP_RL2
+  B:00A0H.7       PUBLIC        Duanxuan
+  B:00A8H.1       PUBLIC        ET0
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  B:0098H.7       PUBLIC        SM0
+  B:0098H.6       PUBLIC        SM1
+  B:0098H.5       PUBLIC        SM2
+  B:00B8H.1       PUBLIC        PT0
+  B:00B8H.3       PUBLIC        PT1
+  B:00D0H.3       PUBLIC        RS0
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  D:0025H         PUBLIC        row
+  B:00B0H.5       PUBLIC        LCD_RS
+  B:00B8H.2       PUBLIC        PX1
+  C:019AH         PUBLIC        _position
+  B:00B0H.6       PUBLIC        LCD_RW
+  B:00C8H.3       PUBLIC        EXEN2
+  B:00A0H.6       PUBLIC        Weixuan
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  B:00B0H.0       PUBLIC        RXD
+  B:00B0H.1       PUBLIC        TXD
+  C:0218H         PUBLIC        _delay
+  B:00D0H.5       PUBLIC        F0
+  B:00B0H.4       PUBLIC        LCD_E
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  -------         DO            MAIN
+  D:0008H         SYMBOL        i
+  D:000AH         SYMBOL        j
+  -------         ENDDO         j
+  C:008FH         LINE#         36
+  C:008FH         LINE#         37
+  C:008FH         LINE#         39
+  C:0092H         LINE#         40
+  C:00A4H         LINE#         41
+  C:00A9H         LINE#         42
+  C:00A9H         LINE#         43
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/29/2017  21:55:48  PAGE 4
+
+
+  C:00B0H         LINE#         44
+  C:00B5H         LINE#         45
+  C:00C4H         LINE#         46
+  C:00C4H         LINE#         47
+  C:00C9H         LINE#         48
+  C:00D0H         LINE#         49
+  C:00D8H         LINE#         50
+  C:00DAH         LINE#         51
+  C:00EBH         LINE#         52
+  C:00F2H         LINE#         54
+  -------         ENDPROC       MAIN
+  -------         PROC          INIT
+  C:01F0H         LINE#         57
+  C:01F0H         LINE#         58
+  C:01F0H         LINE#         59
+  C:01F2H         LINE#         60
+  C:01F4H         LINE#         61
+  C:01F6H         LINE#         62
+  C:01FDH         LINE#         63
+  C:0200H         LINE#         64
+  C:0207H         LINE#         65
+  C:020AH         LINE#         66
+  C:0211H         LINE#         67
+  -------         ENDPROC       INIT
+  -------         PROC          _WRITE
+  D:0007H         SYMBOL        com_data
+  B:0020H.0       SYMBOL        flag
+  C:0238H         LINE#         70
+  C:0238H         LINE#         71
+  C:0238H         LINE#         72
+  C:023BH         LINE#         73
+  C:023FH         LINE#         75
+  C:0241H         LINE#         76
+  C:0243H         LINE#         77
+  C:0245H         LINE#         78
+  C:0247H         LINE#         79
+  C:024AH         LINE#         80
+  C:024CH         LINE#         81
+  C:024FH         LINE#         82
+  C:0251H         LINE#         83
+  -------         ENDPROC       _WRITE
+  -------         PROC          _POSITION
+  D:0007H         SYMBOL        x
+  D:0005H         SYMBOL        y
+  -------         DO            y
+  D:000CH         SYMBOL        pos
+  -------         ENDDO         pos
+  C:019AH         LINE#         85
+  C:019AH         LINE#         86
+  C:019AH         LINE#         88
+  C:01A8H         LINE#         89
+  C:01A8H         LINE#         90
+  C:01A8H         LINE#         91
+  C:01ABH         LINE#         92
+  C:01ADH         LINE#         93
+  C:01ADH         LINE#         94
+  C:01B0H         LINE#         95
+BL51 BANKED LINKER/LOCATER V4.13                                                      05/29/2017  21:55:48  PAGE 5
+
+
+  C:01B2H         LINE#         96
+  C:01B2H         LINE#         97
+  C:01B5H         LINE#         98
+  C:01B7H         LINE#         99
+  C:01B7H         LINE#         100
+  C:01BAH         LINE#         101
+  C:01BAH         LINE#         102
+  C:01BAH         LINE#         103
+  C:01BFH         LINE#         104
+  -------         ENDPROC       _POSITION
+  C:0214H         SYMBOL        L?0031
+  -------         PROC          L?0030
+  -------         ENDPROC       L?0030
+  C:0214H         SYMBOL        L?0031
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        x
+  -------         DO            x
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         j
+  C:0218H         LINE#         107
+  C:0218H         LINE#         108
+  C:0218H         LINE#         110
+  C:0222H         LINE#         111
+  C:0237H         LINE#         112
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        12864_PARALLEL
+
+  -------         MODULE        STRCAT
+  D:000CH         PUBLIC        ?_STRCAT?BYTE
+  C:00F4H         PUBLIC        _STRCAT
+  -------         ENDMOD        STRCAT
+
+  -------         MODULE        ?C?CLDPTR
+  C:01C5H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:01DEH         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

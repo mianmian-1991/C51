@@ -1,0 +1,71 @@
+C51 COMPILER V6.12  STATIC                                                                 10/17/2016 10:18:45 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE STATIC
+OBJECT MODULE PLACED IN .\static.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\static.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          sbit WeiXuan = P2^7;
+   7          sbit DuanXuan = P2^6;
+   8          
+   9          uchar code DigitronTable[] = 
+  10          {
+  11          	0x3f, 0x06, 0x5b, 0x4f, 
+  12          	0x66, 0x6d, 0x7d, 0x07,
+  13          	0x7f, 0x6f, 0x77, 0x7c,
+  14          	0x39, 0x5e, 0x79, 0x71
+  15          };
+  16          
+  17          void delayms(uint);
+  18          
+  19          void main()
+  20          {
+  21   1      	uint num = 0;
+  22   1      
+  23   1      	WeiXuan = 1;
+  24   1      	P0 = 0xc0;   // 选中后六位（对应六个数码管）
+  25   1      	WeiXuan = 0;
+  26   1      
+  27   1      	while(1)
+  28   1      	{
+  29   2      		for (num=0;num<16;num++)
+  30   2      		{
+  31   3      			DuanXuan = 1;
+  32   3      			P0 = DigitronTable[num];
+  33   3      			DuanXuan = 0;
+  34   3      
+  35   3      			delayms(100);
+  36   3      		}
+  37   2      	}
+  38   1      }
+  39          
+  40          void delayms(uint xms)
+  41          {
+  42   1      	uint i,j;
+  43   1      	for(i=xms;i>0;i--)
+  44   1      		for(j=110;j>0;j--);
+  45   1      }
+  46          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     85    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V6.12  STATIC                                                                 10/17/2016 10:18:45 PAGE 2   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

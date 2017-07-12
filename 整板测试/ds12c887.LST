@@ -1,0 +1,223 @@
+C51 COMPILER V9.00   DS12C887                                                              05/06/2015 09:33:42 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE DS12C887
+OBJECT MODULE PLACED IN ds12c887.OBJ
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ds12c887.c BROWSE INCDIR(D:\Keil_v5\C51\INC\STC) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /******************************************************************************/
+   2          /* 项目名称  : TX-1C扩展板 DS12C887实时时钟                                   */
+   3          /* 主控芯片  : STC89C52                                                       */
+   4          /* 文件名称  : RTC_DS12C887                                                   */
+   5          /* 文件功能  : DS12C887实时时钟操作                                           */
+   6          /* 文件版权  : 北京海克智动科技开发有限公司                                   */
+   7          /* 文件版本  :                                                                */
+   8          /******************************************************************************/
+   9          /**********************************包含头文件**********************************/
+  10          #include <config.h>
+  11          bit ds12887_flag1,ds12887_flag_ri;//定义两个位变量
+  12          uchar ds12887_count,s1num,ds12887_flag,t0_num;//其它变量定义
+  13          char miao,shi,fen,year,month,day,week,amiao,afen,ashi;
+  14          uchar code ds12887_table[]=" 20  -  -      ";//液晶固定显示内容
+  15          uchar code ds12887_table1[]="      :  :  ";
+  16          void write_ds(uchar,uchar);//函数申明
+  17          void set_alarm(uchar,uchar,uchar);void read_alarm();
+  18          uchar read_ds(uchar);void set_time();
+  19          
+  20          void ds12887_delay(uint z)//延时函数
+  21          {
+  22   1              uint x,y;
+  23   1              for(x=z;x>0;x--)
+  24   1                      for(y=110;y>0;y--);
+  25   1      } 
+  26          void ds12887_init()                                                                     //初始化函数
+  27          {
+  28   1              uchar num;
+  29   1              EA=1;                                                                                   //打开总中断
+  30   1              EX1=1;                                                                                  //开外部中断1
+  31   1              IT1=1;                                                                                  //设置负跳变沿触发中断
+  32   1              ds12887_flag1=0;                                                                //变量初始化
+  33   1              t0_num=0;
+  34   1              s1num=0;
+  35   1              week=1;
+  36   1              lcden=0;
+  37   1              rd=0;
+  38   1              write_ds(0x0A,0x20);                                                    //打开振荡器
+  39   1              write_ds(0x0B,0x26);                                                    //设置24小时模式，数据二进制格式
+  40   1              set_time();                                                                             //设置上电默认时间
+  41   1              lcd_write_com(0x38);                                                    //1602液晶初始化
+  42   1              delay_1602(20);
+  43   1              lcd_write_com(0x0c);
+  44   1              delay_1602(20);
+  45   1              lcd_write_com(0x06);
+  46   1              delay_1602(20);
+  47   1              lcd_write_com(0x01);
+  48   1              delay_1602(20);
+  49   1              lcd_write_com(0x80);
+  50   1              delay_1602(20);
+  51   1              for(num=0;num<15;num++)                                                 //写入液晶固定部分显示
+  52   1              {
+  53   2                      lcd_write_date(ds12887_table[num]);
+  54   2                      //delay_1602(100);
+  55   2                      ds12887_delay(10);
+C51 COMPILER V9.00   DS12C887                                                              05/06/2015 09:33:42 PAGE 2   
+
+  56   2              }
+  57   1              lcd_write_com(0x80+0x40);
+  58   1              for(num=0;num<11;num++)
+  59   1              {
+  60   2                      lcd_write_date(ds12887_table1[num]);
+  61   2                      //delay_1602(100);
+  62   2                      ds12887_delay(10);
+  63   2              }
+  64   1      }
+  65          void write_sfm(uchar add,char date)                                     //1602液晶刷新时分秒函数4为时，7为分，10为秒
+  66          {
+  67   1              uchar shi,ge;
+  68   1              shi=date/10;
+  69   1              ge=date%10;
+  70   1              lcd_write_com(0x80+0x40+add);
+  71   1              lcd_write_date(0x30+shi);
+  72   1              lcd_write_date(0x30+ge);
+  73   1      }
+  74          void write_nyr(uchar add,char date)                                     //1602液晶刷新年月日函数3为年，6为分，9为秒
+  75          {
+  76   1              uchar shi,ge;
+  77   1              shi=date/10;
+  78   1              ge=date%10;
+  79   1              lcd_write_com(0x80+add);
+  80   1              lcd_write_date(0x30+shi);
+  81   1              lcd_write_date(0x30+ge);
+  82   1      }
+  83          void write_week(char we)                                                        //写液晶星期显示函数
+  84          {
+  85   1              lcd_write_com(0x80+12);
+  86   1              switch(we)
+  87   1              {
+  88   2                      case 1: lcd_write_date('M');ds12887_delay(5);
+  89   2                                      lcd_write_date('O');ds12887_delay(5);
+  90   2                                      lcd_write_date('N');
+  91   2                                      break;
+  92   2                      case 2: lcd_write_date('T');ds12887_delay(5);
+  93   2                                      lcd_write_date('U');ds12887_delay(5);
+  94   2                                      lcd_write_date('E');
+  95   2                                      break;
+  96   2                      case 3: lcd_write_date('W');ds12887_delay(5);
+  97   2                                      lcd_write_date('E');ds12887_delay(5);
+  98   2                                      lcd_write_date('D');
+  99   2                                      break;
+ 100   2                      case 4: lcd_write_date('T');ds12887_delay(5);
+ 101   2                                      lcd_write_date('H');ds12887_delay(5);
+ 102   2                                      lcd_write_date('U');
+ 103   2                                      break;
+ 104   2                      case 5: lcd_write_date('F');ds12887_delay(5);
+ 105   2                                      lcd_write_date('R');ds12887_delay(5);
+ 106   2                                      lcd_write_date('I');
+ 107   2                                      break;
+ 108   2                      case 6: lcd_write_date('S');ds12887_delay(5);
+ 109   2                                      lcd_write_date('A');ds12887_delay(5);
+ 110   2                                      lcd_write_date('T');
+ 111   2                                      break;
+ 112   2                      case 7: lcd_write_date('S');ds12887_delay(5);
+ 113   2                                      lcd_write_date('U');ds12887_delay(5);
+ 114   2                                      lcd_write_date('N');
+ 115   2                                      break;
+ 116   2              }
+ 117   1      }
+C51 COMPILER V9.00   DS12C887                                                              05/06/2015 09:33:42 PAGE 3   
+
+ 118          void write_ds(uchar add,uchar date)                                     //写12C887函数
+ 119          {
+ 120   1              dscs=0;
+ 121   1              dsas=1;
+ 122   1              dsds=1;
+ 123   1              dsrw=1;
+ 124   1              P0=add;                                                                                 //先写地址
+ 125   1              dsas=0;
+ 126   1              dsrw=0;
+ 127   1              P0=date;                                                                                //再写数据
+ 128   1              dsrw=1;
+ 129   1              dsas=1;
+ 130   1              dscs=1;                         
+ 131   1      }
+ 132          
+ 133          uchar read_ds(uchar add)                                                        //读12C887函数
+ 134          {
+ 135   1              uchar ds_date;
+ 136   1              dsas=1;
+ 137   1              dsds=1;
+ 138   1              dsrw=1;
+ 139   1              dscs=0;
+ 140   1              P0=add;                                                                                 //先写地址
+ 141   1              dsas=0;
+ 142   1              dsds=0;
+ 143   1              P0=0xff;
+ 144   1              ds_date=P0;                                                                             //再读数据
+ 145   1              dsds=1;
+ 146   1              dsas=1;
+ 147   1              dscs=1;
+ 148   1              return ds_date; 
+ 149   1      }
+ 150          /*---首次操作12C887时给予寄存器初始化---*/
+ 151          void set_time()                                                                         //首次上电初始化时间函数
+ 152          {
+ 153   1              write_ds(0,0);
+ 154   1              write_ds(1,0);
+ 155   1              write_ds(2,0);
+ 156   1              write_ds(3,0);
+ 157   1              write_ds(4,0);
+ 158   1              write_ds(5,0);
+ 159   1              write_ds(6,0);
+ 160   1              write_ds(7,0);
+ 161   1              write_ds(8,0);
+ 162   1              write_ds(9,0);  
+ 163   1      }
+ 164          void ds12c887_main()//主函数
+ 165          {
+ 166   1              system_init();
+ 167   1              ds12887_init();//调用初始化函数
+ 168   1              while(message=='a')
+ 169   1              {
+ 170   2                      year=read_ds(9);//读取12C887数据
+ 171   2                      month=read_ds(8);                                                                         
+ 172   2                      day=read_ds(7);
+ 173   2                      week=read_ds(6);
+ 174   2                      shi=read_ds(4);                          
+ 175   2                      fen=read_ds(2);
+ 176   2                      miao=read_ds(0);        
+ 177   2                      write_sfm(10,miao);//送液晶显示
+ 178   2                      write_sfm(7,fen);
+ 179   2                      write_sfm(4,shi);
+C51 COMPILER V9.00   DS12C887                                                              05/06/2015 09:33:42 PAGE 4   
+
+ 180   2                      //write_week(week);
+ 181   2                      write_nyr(2,year);
+ 182   2                      write_nyr(5,month);
+ 183   2                      write_nyr(8,day);
+ 184   2              }
+ 185   1      }
+ 186          /*void exter() interrupt 2//外部中断1服务程序
+ 187          {       
+ 188                  uchar c; //进入中断表示闹钟时间到，
+ 189                  ds12887_flag_ri=1; //设置标志位，用以大程序中报警提示
+ 190                  c=read_ds(0x0c);//读取12C887的C寄存器表示响应了中断
+ 191          } */
+ 192          
+ 193          
+ 194          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    651    ----
+   CONSTANT SIZE    =     29    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     14       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

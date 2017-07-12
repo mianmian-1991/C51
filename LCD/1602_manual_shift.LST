@@ -1,0 +1,133 @@
+C51 COMPILER V6.12  1602_MANUAL_SHIFT                                                      06/06/2017 22:53:19 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE 1602_MANUAL_SHIFT
+OBJECT MODULE PLACED IN .\1602_manual_shift.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\1602_manual_shift.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #define uint unsigned int 
+   3          #define uchar unsigned char
+   4          #define COMMAND 1
+   5          #define DATA 0
+   6          
+   7          uchar code row1[] = "HEY, I AM";
+   8          uchar code row2[] = "WATCHING";
+   9          uchar code row3[] = ":) :) :) :) :)  ";
+  10          
+  11          sbit LCD_E = P3^4;
+  12          sbit LCD_RS = P3^5;
+  13          sbit Duanxuan = P2^6;
+  14          sbit Weixuan = P2^7;
+  15          
+  16          void delay(uint);
+  17          void init();
+  18          void write_com(uchar);
+  19          void write_data(uchar);
+  20          void write(uchar,bit);
+  21          
+  22          uint cnt, shift;
+  23          
+  24          void main()
+  25          {
+  26   1      	init();
+  27   1      
+  28   1      	//delay(2000);
+  29   1      
+  30   1      	write(0x80,COMMAND);	// 7.2.4 RAM 地址定到第一行以写入	
+  31   1      	cnt = 0;
+  32   1      	while(row1[cnt]!='\0')
+  33   1      	{
+  34   2      		write(row1[cnt],DATA);
+  35   2      		delay(300);
+  36   2      		//write(0x10,COMMAND);
+  37   2      		cnt++;
+  38   2      	}
+  39   1      
+  40   1      	write(0x80+0x40,COMMAND);	// 7.2.4 RAM 地址定到第二行以写入
+  41   1      	for(cnt=0;cnt<(sizeof(row2)/sizeof(uchar)-1);cnt++)		// 字符串后面有个 '\0'
+  42   1      	{
+  43   2      		write(row2[cnt],DATA);
+  44   2      		delay(300);
+  45   2      	}
+  46   1      	
+  47   1      	for(shift=1;shift<17;shift++)
+  48   1      	{
+  49   2      		write(0x80+0x10-shift,COMMAND);
+  50   2      		cnt = 0;
+  51   2      		while(cnt<shift)
+  52   2      		{
+  53   3      			write(row3[cnt],DATA);
+  54   3      			delay(1);
+  55   3      			cnt++;
+C51 COMPILER V6.12  1602_MANUAL_SHIFT                                                      06/06/2017 22:53:19 PAGE 2   
+
+  56   3      		}
+  57   2      
+  58   2      		write(0x80+0x50-shift,COMMAND);
+  59   2      		cnt = 0;
+  60   2      		while(cnt<shift)
+  61   2      		{
+  62   3      			write(row3[cnt],DATA);
+  63   3      			delay(1);
+  64   3      			cnt++;
+  65   3      		}
+  66   2      
+  67   2      		delay(200);
+  68   2      	}
+  69   1      
+  70   1      	while(1);
+  71   1      }
+  72          
+  73          void init()
+  74          {
+  75   1      	Duanxuan = 0;
+  76   1      	Weixuan = 0;
+  77   1      	LCD_E = 0;
+  78   1      	write(0x38,COMMAND);
+  79   1      	write(0x0f,COMMAND);
+  80   1      	write(0x06,COMMAND);
+  81   1      	write(0x01,COMMAND);
+  82   1      }
+  83          
+  84          void write(uchar com_data, bit comORdata)
+  85          {
+  86   1      	if(comORdata == COMMAND)
+  87   1      		LCD_RS = 0;		// 指令模式
+  88   1      	else
+  89   1      		LCD_RS = 1;		// 数据模式
+  90   1      	P0 = com_data;		// 送到 P0 口
+  91   1      	delay(5);
+  92   1      	LCD_E = 1;		// 使能，送入 RAM
+  93   1      	delay(5);
+  94   1      	LCD_E = 0;
+  95   1      }
+  96          
+  97          void delay(uint x)
+  98          {
+  99   1      	uint i,j;
+ 100   1      	for(i=0;i<x;i++)
+ 101   1      		for(j=0;j<110;j++);
+ 102   1      }
+ 103          
+ 104          
+ 105          
+ 106          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    321    ----
+   CONSTANT SIZE    =     36    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+C51 COMPILER V6.12  1602_MANUAL_SHIFT                                                      06/06/2017 22:53:19 PAGE 3   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

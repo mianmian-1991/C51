@@ -1,0 +1,66 @@
+C51 COMPILER V6.12  I_GET_IT                                                               05/22/2017 20:03:39 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE I_GET_IT
+OBJECT MODULE PLACED IN .\I get it.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\I get it.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #define uint unsigned int
+   3          #define uchar unsigned char
+   4          
+   5          uchar character;
+   6          uchar code table[] = "I get ";
+   7          
+   8          void init();
+   9          
+  10          void main()
+  11          {
+  12   1      	init();
+  13   1      	while(1);
+  14   1      }
+  15          
+  16          void init()
+  17          {
+  18   1      	TMOD = 0x20;
+  19   1      	TH1 = 0xfd;		// ²¨ÌØÂÊ 9600£¬SCON=0
+  20   1      	TL1 = 0xfd;
+  21   1      	TR1 = 1;
+  22   1      	SM0 = 0;
+  23   1      	SM1 = 1;
+  24   1      	REN = 1;
+  25   1      	EA = 1;
+  26   1      	ES = 1;
+  27   1      }
+  28          
+  29          void recieve() interrupt 4
+  30          {
+  31   1      	uint i;
+  32   1      	RI = 0;
+  33   1      	character = SBUF;
+  34   1      	for(i=0;i<sizeof(table)/sizeof(uchar);i++)
+  35   1      	{
+  36   2      		SBUF = table[i];
+  37   2      		while(TI==0);
+  38   2      		TI = 0;
+  39   2      	}
+  40   1      	SBUF = character;
+  41   1      	while(TI==0);
+  42   1      	TI = 0;
+  43   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     94    ----
+   CONSTANT SIZE    =      7    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

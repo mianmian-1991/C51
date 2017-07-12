@@ -1,0 +1,351 @@
+BL51 BANKED LINKER/LOCATER V4.13                                                        06/09/2017  19:48:08  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.13, INVOKED BY:
+D:\[SOFTWARE]\KEIL\C51\BIN\BL51.EXE DC_Infrared.obj TO DC_Infrared RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  DC_Infrared.obj (DC_INFRARED)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C?ULDIV)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C?ULCMP)
+  D:\[SOFTWARE]\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  DC_Infrared (DC_INFRARED)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            REG     0008H     0008H     ABSOLUTE     "REG BANK 1"
+            DATA    0010H     0011H     UNIT         ?DT?DC_INFRARED
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0010H     UNIT         ?CO?DC_INFRARED
+            CODE    0013H     0003H     ABSOLUTE     
+                    0016H     0005H                  *** GAP ***
+            CODE    001BH     0003H     ABSOLUTE     
+            CODE    001EH     014DH     UNIT         ?PR?INTERSVR1?DC_INFRARED
+            CODE    016BH     00DFH     UNIT         ?C?LIB_CODE
+            CODE    024AH     008CH     UNIT         ?C_C51STARTUP
+            CODE    02D6H     0058H     UNIT         ?PR?INF_DISPOSE?DC_INFRARED
+            CODE    032EH     002DH     UNIT         ?PR?INIT?DC_INFRARED
+            CODE    035BH     0022H     UNIT         ?PR?TIME1?DC_INFRARED
+            CODE    037DH     0020H     UNIT         ?PR?DISPLAY?DC_INFRARED
+            CODE    039DH     000EH     UNIT         ?PR?_DELAY?DC_INFRARED
+            CODE    03ABH     000DH     UNIT         ?C_INITSEG
+            CODE    03B8H     000BH     UNIT         ?PR?MAIN?DC_INFRARED
+
+
+
+OVERLAY MAP OF MODULE:   DC_Infrared (DC_INFRARED)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?DC_INFRARED
+  +--> ?C_INITSEG
+
+?PR?MAIN?DC_INFRARED
+  +--> ?PR?INIT?DC_INFRARED
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/09/2017  19:48:08  PAGE 2
+
+
+  +--> ?PR?INF_DISPOSE?DC_INFRARED
+  +--> ?PR?DISPLAY?DC_INFRARED
+
+?PR?DISPLAY?DC_INFRARED
+  +--> ?CO?DC_INFRARED
+  +--> ?PR?_DELAY?DC_INFRARED
+
+
+
+SYMBOL TABLE OF MODULE:  DC_Infrared (DC_INFRARED)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        DC_INFRARED
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  B:00B0H.5       PUBLIC        T1
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  C:0003H         PUBLIC        table
+  D:0010H         PUBLIC        StartFlag
+  D:00A8H         PUBLIC        IE
+  D:0011H         PUBLIC        PulseWidth
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  B:00B8H.4       PUBLIC        PS
+  B:0090H.1       PUBLIC        T2EX
+  B:00D0H.2       PUBLIC        OV
+  C:03B8H         PUBLIC        main
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  D:0012H         PUBLIC        count
+  B:00C8H.5       PUBLIC        RCLK
+  B:00C8H.4       PUBLIC        TCLK
+  C:001EH         PUBLIC        intersvr1
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:032EH         PUBLIC        init
+  D:0013H         PUBLIC        Im
+  D:0017H         PUBLIC        Tc
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  C:035BH         PUBLIC        Time1
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/09/2017  19:48:08  PAGE 3
+
+
+  B:00C8H.0       PUBLIC        CP_RL2
+  B:00A0H.6       PUBLIC        Duanxuan
+  B:00A8H.1       PUBLIC        ET0
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+  D:008CH         PUBLIC        TH0
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  D:008DH         PUBLIC        TH1
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  B:0098H.7       PUBLIC        SM0
+  D:008AH         PUBLIC        TL0
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  B:0098H.5       PUBLIC        SM2
+  B:00B8H.1       PUBLIC        PT0
+  B:0090H.7       PUBLIC        pwm
+  B:00B8H.3       PUBLIC        PT1
+  B:00D0H.3       PUBLIC        RS0
+  D:001BH         PUBLIC        IrOK
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  B:00B8H.2       PUBLIC        PX1
+  C:02D6H         PUBLIC        Inf_Dispose
+  B:00C8H.3       PUBLIC        EXEN2
+  D:001CH         PUBLIC        f
+  B:00A0H.7       PUBLIC        Weixuan
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  D:001DH         PUBLIC        m
+  B:00B0H.0       PUBLIC        RXD
+  B:00B0H.1       PUBLIC        TXD
+  C:039DH         PUBLIC        _delay
+  B:00D0H.5       PUBLIC        F0
+  C:037DH         PUBLIC        display
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:03B8H         LINE#         32
+  C:03B8H         LINE#         33
+  C:03B8H         LINE#         34
+  C:03BBH         LINE#         36
+  C:03BBH         LINE#         37
+  C:03BBH         LINE#         38
+  C:03BEH         LINE#         39
+  C:03C1H         LINE#         40
+  -------         ENDPROC       MAIN
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/09/2017  19:48:08  PAGE 4
+
+
+  -------         PROC          INIT
+  C:032EH         LINE#         43
+  C:032EH         LINE#         44
+  C:032EH         LINE#         45
+  C:0337H         LINE#         46
+  C:0339H         LINE#         47
+  C:033BH         LINE#         48
+  C:033DH         LINE#         49
+  C:033FH         LINE#         51
+  C:0341H         LINE#         53
+  C:0343H         LINE#         54
+  C:0345H         LINE#         56
+  C:0348H         LINE#         57
+  C:034AH         LINE#         58
+  C:034CH         LINE#         59
+  C:034FH         LINE#         60
+  C:0352H         LINE#         61
+  C:0354H         LINE#         62
+  C:0356H         LINE#         64
+  C:0358H         LINE#         65
+  C:035AH         LINE#         66
+  -------         ENDPROC       INIT
+  -------         PROC          _DELAY
+  D:0007H         SYMBOL        i
+  -------         DO            i
+  D:0007H         SYMBOL        j
+  D:0006H         SYMBOL        k
+  -------         ENDDO         k
+  C:039DH         LINE#         68
+  C:039DH         LINE#         69
+  C:039DH         LINE#         72
+  C:03A3H         LINE#         73
+  C:03A3H         LINE#         74
+  C:03A7H         LINE#         75
+  C:03AAH         LINE#         76
+  -------         ENDPROC       _DELAY
+  -------         PROC          DISPLAY
+  C:037DH         LINE#         78
+  C:037DH         LINE#         79
+  C:037DH         LINE#         80
+  C:037FH         LINE#         81
+  C:038BH         LINE#         82
+  C:038DH         LINE#         83
+  C:038FH         LINE#         85
+  C:0391H         LINE#         86
+  C:0394H         LINE#         87
+  C:0396H         LINE#         88
+  C:0398H         LINE#         89
+  -------         ENDPROC       DISPLAY
+  -------         PROC          INTERSVR1
+  C:001EH         LINE#         92
+  C:002BH         LINE#         94
+  C:0042H         LINE#         95
+  C:0044H         LINE#         96
+  C:0046H         LINE#         98
+  C:0067H         LINE#         99
+  C:0067H         LINE#         100
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/09/2017  19:48:08  PAGE 5
+
+
+  C:0073H         LINE#         101
+  C:0079H         LINE#         103
+  C:0079H         LINE#         105
+  C:0082H         LINE#         106
+  C:0082H         LINE#         109
+  C:00A4H         LINE#         110
+  C:00A4H         LINE#         111
+  C:00C9H         LINE#         112
+  C:00DEH         LINE#         113
+  C:00DEH         LINE#         114
+  C:0101H         LINE#         115
+  C:0101H         LINE#         116
+  C:011FH         LINE#         117
+  C:0134H         LINE#         118
+  C:0134H         LINE#         120
+  C:0148H         LINE#         121
+  C:0148H         LINE#         122
+  C:0150H         LINE#         123
+  C:0152H         LINE#         124
+  C:0158H         LINE#         125
+  C:0158H         LINE#         126
+  C:015BH         LINE#         127
+  C:015DH         LINE#         129
+  C:015DH         LINE#         130
+  C:0160H         LINE#         131
+  C:0160H         LINE#         132
+  C:0160H         LINE#         133
+  C:0160H         LINE#         134
+  -------         ENDPROC       INTERSVR1
+  -------         PROC          INF_DISPOSE
+  C:02D6H         LINE#         136
+  C:02D6H         LINE#         137
+  C:02D6H         LINE#         138
+  C:02DCH         LINE#         139
+  C:02DCH         LINE#         140
+  C:02EAH         LINE#         141
+  C:02EAH         LINE#         142
+  C:02EAH         LINE#         143
+  C:02EDH         LINE#         144
+  C:02F1H         LINE#         145
+  C:02F1H         LINE#         146
+  C:02F5H         LINE#         147
+  C:02F5H         LINE#         148
+  C:02F7H         LINE#         149
+  C:02F7H         LINE#         150
+  C:02F9H         LINE#         152
+  C:02F9H         LINE#         153
+  C:02FBH         LINE#         154
+  C:02FDH         LINE#         155
+  C:02FDH         LINE#         156
+  C:02FFH         LINE#         158
+  C:02FFH         LINE#         159
+  C:0305H         LINE#         160
+  C:0308H         LINE#         161
+  C:030DH         LINE#         162
+  C:030DH         LINE#         163
+  C:0310H         LINE#         164
+BL51 BANKED LINKER/LOCATER V4.13                                                      06/09/2017  19:48:08  PAGE 6
+
+
+  C:0310H         LINE#         165
+  C:0312H         LINE#         167
+  C:0312H         LINE#         168
+  C:0318H         LINE#         169
+  C:031BH         LINE#         170
+  C:031FH         LINE#         171
+  C:031FH         LINE#         172
+  C:0322H         LINE#         173
+  C:0322H         LINE#         174
+  C:0327H         LINE#         175
+  C:0327H         LINE#         176
+  C:032AH         LINE#         177
+  C:032AH         LINE#         178
+  C:032AH         LINE#         180
+  C:032AH         LINE#         181
+  C:032AH         LINE#         182
+  C:032AH         LINE#         183
+  C:032DH         LINE#         184
+  C:032DH         LINE#         185
+  -------         ENDPROC       INF_DISPOSE
+  -------         PROC          TIME1
+  C:035BH         LINE#         187
+  C:035FH         LINE#         189
+  C:0362H         LINE#         190
+  C:0365H         LINE#         192
+  C:0367H         LINE#         193
+  C:036CH         LINE#         194
+  C:036CH         LINE#         195
+  C:036EH         LINE#         196
+  C:036EH         LINE#         198
+  C:0373H         LINE#         199
+  C:0373H         LINE#         200
+  C:0375H         LINE#         201
+  C:0378H         LINE#         202
+  C:0378H         LINE#         203
+  -------         ENDPROC       TIME1
+  -------         ENDMOD        DC_INFRARED
+
+  -------         MODULE        ?C?ULDIV
+  C:01A7H         PUBLIC        ?C?ULDIV
+  -------         ENDMOD        ?C?ULDIV
+
+  -------         MODULE        ?C?ULCMP
+  C:0239H         PUBLIC        ?C?ULCMP
+  -------         ENDMOD        ?C?ULCMP
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,49 @@
+C51 COMPILER V6.12  LEFT_RIGHT                                                             10/17/2016 10:14:39 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE LEFT_RIGHT
+OBJECT MODULE PLACED IN .\left_right.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\left_right.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          uchar a = 0xaa;
+   7          
+   8          void delayms(uint);
+   9          
+  10          void main()
+  11          {
+  12   1      	while(1)
+  13   1      	{	
+  14   2      		P1 = a;
+  15   2      		a = a<<1;
+  16   2      		delayms(1000);
+  17   2      	}
+  18   1      }
+  19          
+  20          void delayms(uint xms)
+  21          {
+  22   1      	uint i,j;
+  23   1      	for(i=xms;i>0;i--)
+  24   1      		for(j=110;j>0;j--);
+  25   1      }
+  26          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     48    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,101 @@
+C51 COMPILER V9.00   AD                                                                    05/06/2015 09:33:40 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE AD
+OBJECT MODULE PLACED IN ad.OBJ
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ad.c BROWSE INCDIR(D:\Keil_v5\C51\INC\STC) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <config.h>
+   2          void delay_ad(uchar i)                                          //延时程序
+   3          {
+   4   1              uchar j,k;
+   5   1          for(j=i;j>0;j--)
+   6   1              for(k=125;k>0;k--);
+   7   1      }
+   8          void display(uchar bai_c, sh_c, g_c)            //显示程序
+   9          {
+  10   1              dula=0;
+  11   1              P0=seg_table[bai_c];                                    //显示百位
+  12   1              dula=1;
+  13   1              dula=0;
+  14   1              wela=0;
+  15   1              P0=0x7e;
+  16   1              wela=1;
+  17   1              wela=0;
+  18   1              delay_ad(10);
+  19   1      
+  20   1              dula=0;
+  21   1              P0=seg_table[sh_c];                                             //显示十位
+  22   1              dula=1;
+  23   1              dula=0;
+  24   1              wela=0;
+  25   1              P0=0x7d;
+  26   1              wela=1;
+  27   1              wela=0;
+  28   1              delay_ad(10);
+  29   1                      
+  30   1              dula=0;
+  31   1              P0=seg_table[g_c];                                              //显示个位
+  32   1              dula=1;
+  33   1              dula=0;
+  34   1              wela=0;
+  35   1              P0=0x7b;
+  36   1              wela=1;
+  37   1              wela=0;
+  38   1              delay_ad(10);
+  39   1      }
+  40          void ad_main()
+  41          {
+  42   1              uchar a,b,A1,A2,A2t,A3,adval;
+  43   1          b=0xf0;
+  44   1              system_init();
+  45   1          while(message=='3')
+  46   1              {
+  47   2                  wela=1;
+  48   2                  P0=0;                       //选通ADCS
+  49   2                  adwr=0;                                         //AD写入（随便写个什么都行，主要是为了启动AD转换）
+  50   2                  _nop_();
+  51   2                  adwr=1;
+  52   2                  P0=0xff;                    //关闭ADCS
+  53   2              
+  54   2                  wela=0;                     //关闭有AD片选信号锁存器的锁存端以防止在操作数码管时使AD的片选发生变化
+  55   2                  for(a=30;a>0;a--)        //需要注意的是ADC0804在写和读之间的时间间隔要足够长否则无法读出数据
+C51 COMPILER V9.00   AD                                                                    05/06/2015 09:33:40 PAGE 2   
+
+  56   2                  {                          //这里把显示部分放这里的原因也是为了增加写读之间的时间间隔                
+             -                                                                                                                        
+             -                                                                                   
+  57   3                      display(A1,A2,A3);
+  58   3                  }   //送去显示各位。
+  59   2                      wela=1;                    //重新打开有AD片选信号锁存器的锁存端
+  60   2                  P1=0xff;                    //读取P1口之前先给其写全1
+  61   2                  P0=0;                       //选通ADCS
+  62   2                  adrd=0;                     //AD读使能
+  63   2                  adval=P1;                             //AD数据读取赋给P1口
+  64   2                  adrd=1;
+  65   2                  P0=0xff;                     //关闭ADCS
+  66   2                  adwr=0;
+  67   2                  P1=adval;                    //同时把AD的值送八个发光二极显示
+  68   2                  A1=adval/100;               //分出百，十，和个位
+  69   2                  A2t=adval%100;
+  70   2                  A2=A2t/10;
+  71   2                  A3=A2t%10;
+  72   2              }
+  73   1      }
+  74          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    201    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

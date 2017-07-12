@@ -1,0 +1,157 @@
+Build target 'Target 1'
+compiling E2PROM.c...
+.\E2PROM.C(38): warning C206: 'init_T0': missing function-prototype
+.\E2PROM.C(41): warning C206: 'display': missing function-prototype
+.\E2PROM.C(41): error C267: 'display': requires ANSI-style prototype
+.\E2PROM.C(46): error C231: 'init_T0': redefinition
+.\E2PROM.C(53): error C231: 'init_T0': redefinition
+.\E2PROM.C(71): error C231: 'display': redefinition
+.\E2PROM.C(74): error C213: left side of asn-op not an lvalue
+.\E2PROM.C(75): error C213: left side of asn-op not an lvalue
+Target not created
+Build target 'Target 1'
+compiling E2PROM.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY?E2PROM
+
+creating hex file from "E2PROM"...
+"E2PROM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling E2PROM.c...
+.\E2PROM.C(38): warning C206: 'init': missing function-prototype
+.\E2PROM.C(95): error C231: 'init': redefinition
+.\E2PROM.C(100): error C231: 'init': redefinition
+.\E2PROM.C(104): warning C206: 'start': missing function-prototype
+.\E2PROM.C(105): warning C206: 'write_byte': missing function-prototype
+.\E2PROM.C(105): error C267: 'write_byte': requires ANSI-style prototype
+.\E2PROM.C(106): warning C206: 'respons': missing function-prototype
+.\E2PROM.C(111): warning C206: 'stop': missing function-prototype
+.\E2PROM.C(123): error C202: 'datas': undefined identifier
+.\E2PROM.C(125): error C202: 'datas': undefined identifier
+.\E2PROM.C(129): error C231: 'write_byte': redefinition
+.\E2PROM.C(164): warning C206: 'delya': missing function-prototype
+.\E2PROM.C(171): error C231: 'start': redefinition
+.\E2PROM.C(178): error C231: 'start': redefinition
+.\E2PROM.C(181): error C231: 'stop': redefinition
+.\E2PROM.C(188): error C231: 'stop': redefinition
+.\E2PROM.C(191): error C231: 'respons': redefinition
+.\E2PROM.C(199): error C231: 'respons': redefinition
+Target not created
+Build target 'Target 1'
+compiling E2PROM.c...
+.\E2PROM.C(43): warning C206: 'init': missing function-prototype
+.\E2PROM.C(100): error C231: 'init': redefinition
+.\E2PROM.C(105): error C231: 'init': redefinition
+.\E2PROM.C(128): error C202: 'datas': undefined identifier
+.\E2PROM.C(130): error C202: 'datas': undefined identifier
+.\E2PROM.C(169): warning C206: 'delya': missing function-prototype
+Target not created
+Build target 'Target 1'
+compiling E2PROM.c...
+.\E2PROM.C(124): error C141: syntax error near 'start'
+.\E2PROM.C(124): error C231: 'start': redefinition
+Target not created
+Build target 'Target 1'
+compiling E2PROM.c...
+.\E2PROM.C(124): error C141: syntax error near 'start'
+.\E2PROM.C(124): error C231: 'start': redefinition
+Target not created
+Build target 'Target 1'
+compiling E2PROM.c...
+.\E2PROM.C(124): error C141: syntax error near 'start'
+.\E2PROM.C(124): error C231: 'start': redefinition
+Target not created
+Build target 'Target 1'
+compiling E2PROM.c...
+.\E2PROM.C(155): error C141: syntax error near 'start'
+.\E2PROM.C(155): error C231: 'start': redefinition
+Target not created
+Build target 'Target 1'
+compiling E2PROM.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_WRITE_BYTE?E2PROM
+    CALLER1: ?PR?INTERRUPTT0?E2PROM
+    CALLER2: ?C_C51STARTUP
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?RESPONS?E2PROM
+    CALLER1: ?PR?INTERRUPTT0?E2PROM
+    CALLER2: ?C_C51STARTUP
+
+creating hex file from "E2PROM"...
+"E2PROM" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling E2PROM.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_WRITE_BYTE?E2PROM
+    CALLER1: ?PR?INTERRUPTT0?E2PROM
+    CALLER2: ?C_C51STARTUP
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?RESPONS?E2PROM
+    CALLER1: ?PR?INTERRUPTT0?E2PROM
+    CALLER2: ?C_C51STARTUP
+
+creating hex file from "E2PROM"...
+"E2PROM" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling E2PROM.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_WRITE_BYTE?E2PROM
+    CALLER1: ?PR?INTERRUPTT0?E2PROM
+    CALLER2: ?C_C51STARTUP
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?RESPONS?E2PROM
+    CALLER1: ?PR?INTERRUPTT0?E2PROM
+    CALLER2: ?C_C51STARTUP
+
+creating hex file from "E2PROM"...
+"E2PROM" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling E2PROM.c...
+linking...
+creating hex file from "E2PROM"...
+"E2PROM" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling E2PROM.c...
+linking...
+creating hex file from "E2PROM"...
+"E2PROM" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling E2PROM.c...
+linking...
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_WRITE_BYTE?E2PROM
+    CALLER1: ?PR?INTERRUPTT0?E2PROM
+    CALLER2: ?C_C51STARTUP
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?RESPONS?E2PROM
+    CALLER1: ?PR?INTERRUPTT0?E2PROM
+    CALLER2: ?C_C51STARTUP
+
+creating hex file from "E2PROM"...
+"E2PROM" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling E2PROM.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISPLAY?E2PROM
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?_WRITE_BYTE?E2PROM
+    CALLER1: ?PR?INTERRUPTT0?E2PROM
+    CALLER2: ?C_C51STARTUP
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?RESPONS?E2PROM
+    CALLER1: ?PR?INTERRUPTT0?E2PROM
+    CALLER2: ?C_C51STARTUP
+
+creating hex file from "E2PROM"...
+"E2PROM" - 0 Error(s), 3 Warning(s).
