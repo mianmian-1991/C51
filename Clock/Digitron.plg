@@ -1,0 +1,186 @@
+Build target 'Target 1'
+compiling Digitron.c...
+.\DIGITRON.C(38): error C208: '_display': too many actual parameters
+.\DIGITRON.C(39): error C208: '_display': too many actual parameters
+.\DIGITRON.C(40): error C208: '_display': too many actual parameters
+.\DIGITRON.C(95): warning C236: '_display': different length of parameter lists
+.\DIGITRON.C(111): error C213: left side of asn-op not an lvalue
+.\DIGITRON.C(125): warning C206: 'delay': missing function-prototype
+.\DIGITRON.C(125): error C267: 'delay': requires ANSI-style prototype
+Target not created
+Build target 'Target 1'
+compiling Digitron.c...
+.\DIGITRON.C(125): warning C206: 'delay': missing function-prototype
+.\DIGITRON.C(125): error C267: 'delay': requires ANSI-style prototype
+Target not created
+Build target 'Target 1'
+compiling Digitron.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INIT?DIGITRON
+
+"Digitron" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+creating hex file from "Digitron"...
+"Digitron" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Digitron.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INIT?DIGITRON
+
+creating hex file from "Digitron"...
+"Digitron" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling Digitron.c...
+linking...
+creating hex file from "Digitron"...
+"Digitron" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Digitron.c...
+linking...
+creating hex file from "Digitron"...
+"Digitron" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Digitron.c...
+.\DIGITRON.C(81): warning C280: 'i': unreferenced local variable
+linking...
+creating hex file from "Digitron"...
+"Digitron" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling Digitron.c...
+linking...
+creating hex file from "Digitron"...
+"Digitron" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Digitron.c...
+linking...
+creating hex file from "Digitron"...
+"Digitron" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Digitron.c...
+E2PROM.H(8): error C202: 'SDA': undefined identifier
+E2PROM.H(10): error C202: 'SCL': undefined identifier
+E2PROM.H(17): error C202: 'SDA': undefined identifier
+E2PROM.H(19): error C202: 'SCL': undefined identifier
+E2PROM.H(21): error C202: 'SDA': undefined identifier
+E2PROM.H(28): error C202: 'SDA': undefined identifier
+E2PROM.H(30): error C202: 'SCL': undefined identifier
+E2PROM.H(32): error C202: 'SDA': undefined identifier
+E2PROM.H(39): error C202: 'uchar': undefined identifier
+E2PROM.H(39): error C141: syntax error near 'i'
+E2PROM.H(41): error C202: 'SCL': undefined identifier
+E2PROM.H(43): error C202: 'SDA': undefined identifier
+E2PROM.H(44): error C202: 'SCL': undefined identifier
+E2PROM.H(49): error C141: syntax error near 'byte2send', expected ')'
+E2PROM.H(51): error C141: syntax error near 'i'
+E2PROM.H(51): error C202: 'i': undefined identifier
+E2PROM.H(53): error C202: 'i': undefined identifier
+E2PROM.H(55): error C202: 'byte2send': undefined identifier
+E2PROM.H(56): error C202: 'SCL': undefined identifier
+E2PROM.H(58): error C202: 'SDA': undefined identifier
+E2PROM.H(60): error C202: 'SCL': undefined identifier
+E2PROM.H(64): error C202: 'SCL': undefined identifier
+E2PROM.H(66): error C202: 'SDA': undefined identifier
+E2PROM.H(71): error C129: missing ';' before 'read_byte'
+Target not created
+Build target 'Target 1'
+compiling Digitron.c...
+E2PROM.H(42): error C202: 'uchar': undefined identifier
+E2PROM.H(42): error C141: syntax error near 'i'
+E2PROM.H(46): error C202: 'i': undefined identifier
+E2PROM.H(52): error C141: syntax error near 'byte2send', expected ')'
+E2PROM.H(54): error C141: syntax error near 'i'
+E2PROM.H(54): error C202: 'i': undefined identifier
+E2PROM.H(56): error C202: 'i': undefined identifier
+E2PROM.H(58): error C202: 'byte2send': undefined identifier
+E2PROM.H(74): error C129: missing ';' before 'read_byte'
+Target not created
+Build target 'Target 1'
+compiling Digitron.c...
+E2PROM.H(42): error C202: 'uchar': undefined identifier
+E2PROM.H(42): error C141: syntax error near 'i'
+E2PROM.H(46): error C202: 'i': undefined identifier
+E2PROM.H(52): error C141: syntax error near 'byte2send', expected ')'
+E2PROM.H(54): error C141: syntax error near 'i'
+E2PROM.H(54): error C202: 'i': undefined identifier
+E2PROM.H(56): error C202: 'i': undefined identifier
+E2PROM.H(58): error C202: 'byte2send': undefined identifier
+E2PROM.H(74): error C129: missing ';' before 'read_byte'
+Target not created
+Build target 'Target 1'
+compiling Digitron.c...
+.\DIGITRON.C(56): error C237: 'init': function already has a body
+Target not created
+Build target 'Target 1'
+compiling Digitron.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITE2PROM?DIGITRON
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_WRITE?DIGITRON
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_READ?DIGITRON
+
+creating hex file from "Digitron"...
+"Digitron" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+compiling Digitron.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITE2PROM?DIGITRON
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?RESPONS?DIGITRON
+    CALLER1: ?PR?DIGITRON_T0?DIGITRON
+    CALLER2: ?C_C51STARTUP
+
+creating hex file from "Digitron"...
+"Digitron" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling Digitron.c...
+E2PROM.H(8): warning C206: 'delay': missing function-prototype
+DELAY.H(9): error C231: 'delay': redefinition
+DELAY.H(9): error C231: 'delay': redefinition
+Target not created
+Build target 'Target 1'
+compiling Digitron.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITE2PROM?DIGITRON
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?RESPONS?DIGITRON
+    CALLER1: ?PR?DIGITRON_T0?DIGITRON
+    CALLER2: ?C_C51STARTUP
+
+creating hex file from "Digitron"...
+"Digitron" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling Digitron.c...
+.\DIGITRON.C(54): warning C206: 'scankey': missing function-prototype
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITE2PROM?DIGITRON
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEYSCAN?DIGITRON
+
+*** WARNING L15: MULTIPLE CALL TO SEGMENT
+    SEGMENT: ?PR?RESPONS?DIGITRON
+    CALLER1: ?PR?DIGITRON_T0?DIGITRON
+    CALLER2: ?C_C51STARTUP
+
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  SCANKEY
+    MODULE:  Digitron.obj (DIGITRON)
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  SCANKEY
+    MODULE:  Digitron.obj (DIGITRON)
+    ADDRESS: 024CH
+
+creating hex file from "Digitron"...
+"Digitron" - 0 Error(s), 6 Warning(s).

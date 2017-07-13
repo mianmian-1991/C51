@@ -1,0 +1,257 @@
+C51 COMPILER V6.12  DIGITRON                                                               07/13/2017 16:48:19 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE DIGITRON
+OBJECT MODULE PLACED IN .\Digitron.OBJ
+COMPILER INVOKED BY: D:\[Software]\Keil\C51\BIN\C51.EXE .\Digitron.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          #include<delay.h>
+   7          #include<E2PROM.h>
+   8          
+   9          #define HOUR 0
+  10          #define MINUTE 2
+  11          #define SECOND 4
+  12          
+  13          sbit Weixuan = P2^7;
+  14          sbit Duanxuan = P2^6;
+  15          
+  16          sbit keyCol = P3^7;
+  17          sbit keyS1 = P3^0;
+  18          sbit keyS2 = P3^1;
+  19          sbit keyS3 = P3^2;
+  20          
+  21          sbit buzzer = P2^3;
+  22          
+  23          uchar code DigitronTable[] =
+  24          {
+  25              0x3f, 0x06, 0x5b, 0x4f,
+  26              0x66, 0x6d, 0x7d, 0x07,
+  27              0x7f, 0x6f, 0x77, 0x7c,
+  28              0x39, 0x5e, 0x79, 0x71
+  29          };
+  30          
+  31          uchar code WeiTable[] =
+  32          {
+  33              0xfe, 0xfd, 0xfb, 0xf7, 0xef, 0xdf
+  34          };
+  35          
+  36          uint N_50ms = 65536-45872;
+  37          uint num_LED = 0;
+  38          uint num_Digitron = 0;
+  39          int hour = 23, minute = 58, second = 50;
+  40          uchar menu = 0; 
+  41          
+  42          void display(uchar, uint);
+  43          void init();
+  44          void beep();
+  45          
+  46          void main()
+  47          {
+  48   1      	init();
+  49   1      	hour = read(0x01);
+  50   1      	minute = read(0x02);
+  51   1      	second = read(0x03);
+  52   1      	while(1) 
+  53   1      	{
+  54   2      		scankey();
+*** WARNING C206 IN LINE 54 OF .\DIGITRON.C: 'scankey': missing function-prototype
+C51 COMPILER V6.12  DIGITRON                                                               07/13/2017 16:48:19 PAGE 2   
+
+  55   2      		switch(menu)
+  56   2      		{
+  57   3      			case 1:
+  58   3      				display(SECOND, second);
+  59   3      				break;
+  60   3      			case 2:
+  61   3      				display(MINUTE, minute);
+  62   3      				break;
+  63   3      			case 3:
+  64   3      				display(HOUR, hour);
+  65   3      				break;
+  66   3      			default:
+  67   3      				display(HOUR, hour);
+  68   3      				display(MINUTE, minute);
+  69   3      				display(SECOND, second);
+  70   3      				break;
+  71   3      		}
+  72   2      	}
+  73   1      }
+  74          
+  75          void init()
+  76          {
+  77   1      	TMOD = 0x01;	// T0 工作在方式 1
+  78   1      	TH0 = N_50ms / 256;		// 50ms
+  79   1      	TL0 = N_50ms % 256;	
+  80   1      	EA = 1;
+  81   1      	ET0 = 1;
+  82   1      	TR0 = 1;
+  83   1      
+  84   1      	keyCol = 0;
+  85   1      
+  86   1      	buzzer = 1;
+  87   1      }
+  88          
+  89          void beep()
+  90          {
+  91   1      	buzzer = 0;
+  92   1      	delayms(100);
+  93   1      	buzzer = 1;
+  94   1      }
+  95          
+  96          void Digitron_T0() interrupt 1
+  97          {
+  98   1      	TH0 = N_50ms / 256;
+  99   1      	TL0 = N_50ms % 256;
+ 100   1      	num_Digitron++;
+ 101   1      	if (num_Digitron >= 1000/50)
+ 102   1      	{
+ 103   2      		num_Digitron = 0;
+ 104   2      		second++;
+ 105   2      		write(0x03,second);
+ 106   2      		if (second >= 60)
+ 107   2      		{
+ 108   3      			second = 0;
+ 109   3      			minute++;
+ 110   3      			write(0x02,minute);
+ 111   3      			if (minute >= 60)
+ 112   3      			{
+ 113   4      				minute = 0;
+ 114   4      				hour++;
+ 115   4      				write(0x01,hour);
+ 116   4      				if (hour >= 24)
+C51 COMPILER V6.12  DIGITRON                                                               07/13/2017 16:48:19 PAGE 3   
+
+ 117   4      					hour = 0;
+ 118   4      			}
+ 119   3      		}
+ 120   2      	}
+ 121   1      }
+ 122          
+ 123          void keyscan()
+ 124          {
+ 125   1      	if(keyS1==0)
+ 126   1      	{
+ 127   2      		delayms(10);
+ 128   2      		if(keyS1==0)
+ 129   2      		{
+ 130   3      			menu ++;
+ 131   3      			while(keyS1==0);
+ 132   3      			beep();
+ 133   3      			switch(menu)
+ 134   3      			{
+ 135   4      				case 4:
+ 136   4      					menu = 0;
+ 137   4      					TR0 = 1;
+ 138   4      					break;
+ 139   4      				default:
+ 140   4      					TR0 = 0;
+ 141   4      					break;	
+ 142   4      			}
+ 143   3      		}
+ 144   2      	}
+ 145   1      	
+ 146   1      	if(menu!=0)
+ 147   1      	{
+ 148   2      		if(keyS2==0)
+ 149   2      		{
+ 150   3      			delayms(10);
+ 151   3      			if(keyS2==0)
+ 152   3      			{
+ 153   4      				switch(menu)				
+ 154   4      				{
+ 155   5      					case 1:
+ 156   5      						second++;
+ 157   5      						if(second>=60)
+ 158   5      							second = 0;
+ 159   5      						break;
+ 160   5      					case 2:
+ 161   5      						minute++;
+ 162   5      						if(minute>=60)
+ 163   5      							minute = 0;
+ 164   5      						break;
+ 165   5      					case 3:
+ 166   5      						hour++;
+ 167   5      						if(hour>=24)
+ 168   5      							hour = 0;
+ 169   5      						break;	
+ 170   5      				}
+ 171   4      			}
+ 172   3      		}
+ 173   2      
+ 174   2      		if(keyS3==0)
+ 175   2      		{
+ 176   3      			delayms(10);
+ 177   3      			if(keyS3==0)
+ 178   3      			{
+C51 COMPILER V6.12  DIGITRON                                                               07/13/2017 16:48:19 PAGE 4   
+
+ 179   4      				switch(menu)				
+ 180   4      				{
+ 181   5      					case 1:
+ 182   5      						second--;
+ 183   5      						if(second<0)
+ 184   5      							second = 59;
+ 185   5      						break;
+ 186   5      					case 2:
+ 187   5      						minute--;
+ 188   5      						if(minute<0)
+ 189   5      							minute = 59;
+ 190   5      						break;
+ 191   5      					case 3:
+ 192   5      						hour--;
+ 193   5      						if(hour<0)
+ 194   5      							hour = 23;
+ 195   5      						break;	
+ 196   5      				}
+ 197   4      			}
+ 198   3      		}
+ 199   2      
+ 200   2      	}
+ 201   1      }
+ 202          
+ 203          void display(uchar start, uint num)
+ 204          {
+ 205   1          Duanxuan = 1;
+ 206   1          P0 = DigitronTable[num/10];     // 段码
+ 207   1          Duanxuan = 0;
+ 208   1          P0 = 0xff;     // 消影
+ 209   1          Weixuan = 1;
+ 210   1          P0 = WeiTable[start];     // 位码
+ 211   1          Weixuan = 0;
+ 212   1          delayms(3);
+ 213   1      
+ 214   1      	Duanxuan = 1;
+ 215   1          P0 = DigitronTable[num%10];     // 段码
+ 216   1          Duanxuan = 0;
+ 217   1          P0 = 0xff;     // 消影
+ 218   1          Weixuan = 1;
+ 219   1          P0 = WeiTable[start+1];     // 位码
+ 220   1          Weixuan = 0;
+ 221   1          delayms(3);
+ 222   1      }
+ 223          
+ 224          
+ 225          
+ 226          
+ 227          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    849    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     13       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
